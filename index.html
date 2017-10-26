@@ -366,7 +366,6 @@
 <h4 id="存在的问题"><a href="#存在的问题" class="headerlink" title="存在的问题"></a>存在的问题</h4><blockquote>
 <ol>
 <li>在编译模版中多次引用同个data上的数据会导致重复的<code>Watcher</code>创建。</li>
-<li>对于<code>Watcher</code>的缓存使用，原先逻辑代码上因为对当前<code>Watcher</code>需要在多个类中进行使用，通过在<code>Dep</code>类上创建一个静态变量<code>target</code>实现缓存，使用上会导致代码的可读性降低，增加逻辑的复杂度。</li>
 </ol>
 <p>上述问题以后会继续研究，待续…</p>
 </blockquote>

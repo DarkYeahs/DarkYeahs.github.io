@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Yeahs&#39;s Blog">
 <meta property="og:description" content="模仿vue的双向数据绑定 前段时间听了TGideas的一场交流会之后萌生了自己实现数据双向绑定的想法，于是在参考了DMQ/mvvm: 剖析vue实现原理，自己动手实现mvvm的逻辑后用TypeScript实现了一套简单的双向数据绑定的库项目地址在这学习vue的双向数据绑定 项目主要代码目录如下123456789101112src|--Yue|--|--util|--|--|--CompileUti">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-26T08:40:24.000Z">
+<meta property="og:updated_time" content="2017-10-26T12:39:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="双向数据绑定的实现">
 <meta name="twitter:description" content="模仿vue的双向数据绑定 前段时间听了TGideas的一场交流会之后萌生了自己实现数据双向绑定的想法，于是在参考了DMQ/mvvm: 剖析vue实现原理，自己动手实现mvvm的逻辑后用TypeScript实现了一套简单的双向数据绑定的库项目地址在这学习vue的双向数据绑定 项目主要代码目录如下123456789101112src|--Yue|--|--util|--|--|--CompileUti">
@@ -363,7 +363,6 @@
 <h4 id="存在的问题"><a href="#存在的问题" class="headerlink" title="存在的问题"></a>存在的问题</h4><blockquote>
 <ol>
 <li>在编译模版中多次引用同个data上的数据会导致重复的<code>Watcher</code>创建。</li>
-<li>对于<code>Watcher</code>的缓存使用，原先逻辑代码上因为对当前<code>Watcher</code>需要在多个类中进行使用，通过在<code>Dep</code>类上创建一个静态变量<code>target</code>实现缓存，使用上会导致代码的可读性降低，增加逻辑的复杂度。</li>
 </ol>
 <p>上述问题以后会继续研究，待续…</p>
 </blockquote>
