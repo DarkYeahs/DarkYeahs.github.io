@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Vue," />
+  <meta name="keywords" content="JavaScript， 笔记," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="模仿vue的双向数据绑定 前段时间听了TGideas的一场交流会之后萌生了自己实现数据双向绑定的想法，于是在参考了DMQ/mvvm: 剖析vue实现原理，自己动手实现mvvm的逻辑后用TypeScript实现了一套简单的双向数据绑定的库项目地址在这学习vue的双向数据绑定 项目主要代码目录如下123456789101112src|--Yue|--|--util|--|--|--CompileUti">
-<meta name="keywords" content="Vue">
+<meta name="description" content="以前事件队列在我的认知范围内是只有两种：同步事件队列与异步事件队列。在处理事件队列过程中，浏览器会定期检测同步队列并从同步事件队列获取事件，并将之执行，在这过程中，异步队列触发回调事件时，会将其从异步队列中出队，加入到同步事件队列中，一直重复上述过程。 但在这里有个疑问，当多个异步事件队列同时到同步队列过程中是以什么标准去实现的？ 这个疑问直到前段时间看Vue有关的博客中无意间看到Chunk li">
+<meta name="keywords" content="JavaScript， 笔记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="双向数据绑定的实现">
-<meta property="og:url" content="http://blog.yeahs.cc/2017/10/26/双向数据绑定的实现/index.html">
+<meta property="og:title" content="event loop学习回顾">
+<meta property="og:url" content="http://blog.yeahs.cc/2017/10/27/event-loop学习回顾/index.html">
 <meta property="og:site_name" content="Yeahs&#39;s Blog">
-<meta property="og:description" content="模仿vue的双向数据绑定 前段时间听了TGideas的一场交流会之后萌生了自己实现数据双向绑定的想法，于是在参考了DMQ/mvvm: 剖析vue实现原理，自己动手实现mvvm的逻辑后用TypeScript实现了一套简单的双向数据绑定的库项目地址在这学习vue的双向数据绑定 项目主要代码目录如下123456789101112src|--Yue|--|--util|--|--|--CompileUti">
+<meta property="og:description" content="以前事件队列在我的认知范围内是只有两种：同步事件队列与异步事件队列。在处理事件队列过程中，浏览器会定期检测同步队列并从同步事件队列获取事件，并将之执行，在这过程中，异步队列触发回调事件时，会将其从异步队列中出队，加入到同步事件队列中，一直重复上述过程。 但在这里有个疑问，当多个异步事件队列同时到同步队列过程中是以什么标准去实现的？ 这个疑问直到前段时间看Vue有关的博客中无意间看到Chunk li">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-26T12:39:20.000Z">
+<meta property="og:updated_time" content="2017-10-27T07:00:57.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="双向数据绑定的实现">
-<meta name="twitter:description" content="模仿vue的双向数据绑定 前段时间听了TGideas的一场交流会之后萌生了自己实现数据双向绑定的想法，于是在参考了DMQ/mvvm: 剖析vue实现原理，自己动手实现mvvm的逻辑后用TypeScript实现了一套简单的双向数据绑定的库项目地址在这学习vue的双向数据绑定 项目主要代码目录如下123456789101112src|--Yue|--|--util|--|--|--CompileUti">
+<meta name="twitter:title" content="event loop学习回顾">
+<meta name="twitter:description" content="以前事件队列在我的认知范围内是只有两种：同步事件队列与异步事件队列。在处理事件队列过程中，浏览器会定期检测同步队列并从同步事件队列获取事件，并将之执行，在这过程中，异步队列触发回调事件时，会将其从异步队列中出队，加入到同步事件队列中，一直重复上述过程。 但在这里有个疑问，当多个异步事件队列同时到同步队列过程中是以什么标准去实现的？ 这个疑问直到前段时间看Vue有关的博客中无意间看到Chunk li">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://blog.yeahs.cc/2017/10/26/双向数据绑定的实现/"/>
+  <link rel="canonical" href="http://blog.yeahs.cc/2017/10/27/event-loop学习回顾/"/>
 
 
 
 
 
-  <title>双向数据绑定的实现 | Yeahs's Blog</title>
+  <title>event loop学习回顾 | Yeahs's Blog</title>
   
 
 
@@ -243,7 +243,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.yeahs.cc/2017/10/26/双向数据绑定的实现/">
+    <link itemprop="mainEntityOfPage" href="http://blog.yeahs.cc/2017/10/27/event-loop学习回顾/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yeahs">
@@ -260,7 +260,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">双向数据绑定的实现</h1>
+          <h1 class="post-title" itemprop="name headline">event loop学习回顾</h1>
         
 
         <div class="post-meta">
@@ -272,8 +272,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-26T16:38:18+08:00">
-                2017-10-26
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-27T10:43:01+08:00">
+                2017-10-27
               </time>
             
 
@@ -312,7 +312,7 @@
 
           
           
-             <span id="/2017/10/26/双向数据绑定的实现/" class="leancloud_visitors" data-flag-title="双向数据绑定的实现">
+             <span id="/2017/10/27/event-loop学习回顾/" class="leancloud_visitors" data-flag-title="event loop学习回顾">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -343,29 +343,52 @@
       
 
       
-        <h2 id="模仿vue的双向数据绑定"><a href="#模仿vue的双向数据绑定" class="headerlink" title="模仿vue的双向数据绑定"></a>模仿vue的双向数据绑定</h2><blockquote>
-<p>前段时间听了TGideas的一场交流会之后萌生了自己实现数据双向绑定的想法，于是在参考了<a href="https://github.com/DMQ/mvvm" target="_blank" rel="external">DMQ/mvvm: 剖析vue实现原理，自己动手实现mvvm</a>的逻辑后用TypeScript实现了一套简单的双向数据绑定的库<br>项目地址在这<a href="https://github.com/DarkYeahs/Yue" target="_blank" rel="external">学习vue的双向数据绑定</a></p>
-<h4 id="项目主要代码目录如下"><a href="#项目主要代码目录如下" class="headerlink" title="项目主要代码目录如下"></a>项目主要代码目录如下</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">src</div><div class="line">|--Yue</div><div class="line">|--|--util</div><div class="line">|--|--|--CompileUtil.ts</div><div class="line">|--|--|--Updater.ts</div><div class="line">|--|--Yue.ts</div><div class="line">|--|--Observer.ts</div><div class="line">|--|--Compile.ts</div><div class="line">|--|--Observer.ts</div><div class="line">|--|--Dep.ts</div><div class="line">|--|--Watcher.ts</div><div class="line">|--index.ts</div></pre></td></tr></table></figure>
-<p>整个项目通过src目录下的index.ts对外暴露引用，主体类是Yue目录下的Yue.ts。<br>同时Yue类下面还有Observer.ts以及Compile.ts两个主要类。Observer类是用来建立Yue实例化后对象下的data数据的监测，Compile类是负责将自定义的一套html语法糖编译成浏览器所能理解的dom树<br>util目录下存放着CompileUtil以及Updater两个工具类，CompileUtil类是编译工具类，Updater是数据更新工具类</p>
+        <p>以前事件队列在我的认知范围内是只有两种：同步事件队列与异步事件队列。在处理事件队列过程中，浏览器会定期检测同步队列并从同步事件队列获取事件，并将之执行，在这过程中，异步队列触发回调事件时，会将其从异步队列中出队，加入到同步事件队列中，一直重复上述过程。</p>
+<p>但在这里有个疑问，当多个异步事件队列同时到同步队列过程中是以什么标准去实现的？</p>
+<p>这个疑问直到前段时间看Vue有关的博客中无意间看到Chunk liu的<a href="https://chuckliu.me/#!/posts/58bd08a2b5187d2fb51c04f9" target="_blank" rel="external">Vue源码详解之nextTick：MutationObserver只是浮云，microtask才是核心</a>才了解到microTask的概念，才知道task的区分不是我原先理解的那么一回事。后面又读了Jake Archibald 写的<a href="https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/" target="_blank" rel="external">Tasks， microtasks， queues and schedules</a>才知道event loop到底是个怎么回事。</p>
+<p>先说下task跟microTask的概念</p>
+<h4 id="task"><a href="#task" class="headerlink" title="task"></a>task</h4><p>task 又称 macrotask。HTML 规范中 task 的有关章节是这么说的：</p>
+<blockquote>
+<p>一个 eventloop 有一或多个 task 队列。每个 task 由一个确定的 task 源提供。从不同 task 源而来的 task 可能会放到不同的 task 队列中。例如，浏览器可能单独为鼠标键盘事件维护一个 task 队列，所有其他 task 都放到另一个 task 队列。通过区分 task 队列的优先级，使高优先级的 task 优先执行，保证更好的交互体验。</p>
 </blockquote>
-<h4 id="双向数据绑定的实现逻辑"><a href="#双向数据绑定的实现逻辑" class="headerlink" title="双向数据绑定的实现逻辑"></a>双向数据绑定的实现逻辑</h4><blockquote>
-<p>具体逻辑可以参考<a href="https://github.com/DMQ/mvvm" target="_blank" rel="external">DMQ/mvvm: 剖析vue实现原理，自己动手实现mvvm</a>这篇所讲的，我只是大概讲一下关于自己的理解。</p>
-<ol>
-<li>建立对数据的监测。在<code>Observer</code>这个类中使用<code>Object.defineProperty</code>方法重新定义data上的数据，实现对data的数据劫持。在这个过程中为每个属性节点建立一个发布者，这个发布者是针对对应的属性节点以及其后代属性的。</li>
-<li>模版的转换。<ul>
-<li>模版的获取。通过<code>document.createDocumentFragment</code>方法创建一个文档碎片，并通过appendChild方法将编译范围内的dom&gt;从文档树中移除并加入到文档碎片中。</li>
-<li>模版的编译。通过<code>node.childNodes</code>递归遍历每个dom节点，使用正则匹配判断每个节点是否存在需要编译的文本，若存在，则将其跟data上的数据进行匹配，并创建一个订阅者将其加入到相应的发布者中。</li>
+<p>task源包括：</p>
+<ul>
+<li>DOM 操作任务源：如元素以非阻塞方式插入文档</li>
+<li>用户交互任务源：如鼠标键盘事件。用户输入事件（如 click） 必须使用 task 队列</li>
+<li>网络任务源：如 XHR 回调</li>
+<li>history 回溯任务源：使用 history.back() 或者类似 API<br>此外 setTimeout、setInterval、IndexDB 数据库操作等也是任务源。</li>
 </ul>
-</li>
-<li>通过在数据监测以及dom数据绑定的过程构建发布-订阅的设计模式，实现了双向数据绑定</li>
-</ol>
-</blockquote>
-<h4 id="存在的问题"><a href="#存在的问题" class="headerlink" title="存在的问题"></a>存在的问题</h4><blockquote>
+<h4 id="microTask"><a href="#microTask" class="headerlink" title="microTask"></a>microTask</h4><p>microTask：规范上是这么说的：每个event loop都有一个microTask， microTask存在于microTask队列中。<br>microTask主要分以下几种：</p>
+<ul>
+<li>Promise.then</li>
+<li>MutationObserver</li>
+<li>Object.observe<br>其中Promise.then由于不同浏览器的实现有所不同，有些运行触发的是microTask，有些触发的触发的是task，不过标准上是触发microTask的</li>
+</ul>
+<h4 id="event-loop的循环过程"><a href="#event-loop的循环过程" class="headerlink" title="event loop的循环过程"></a>event loop的循环过程</h4><p>在说了task跟microTask的概念后再说下event loop的循环过程。先贴一下规范的说法(有点凑字数的嫌弃。。。)：</p>
+<blockquote>
+<p>An event loop must continually run through the following steps for as long as it exists:</p>
 <ol>
-<li>在编译模版中多次引用同个data上的数据会导致重复的<code>Watcher</code>创建。</li>
+<li>Select the oldest task on one of the event loop’s task queues, if any, ignoring, in the case of a browsing context event loop, tasks whose associated Documents are not fully active. The user agent may pick any task queue. If there is no task to select, then jump to the microtasks step below.</li>
+<li>Set the event loop’s currently running task to the task selected in the previous step.</li>
+<li>Run: Run the selected task.</li>
+<li>Set the event loop’s currently running task back to null.</li>
+<li>Remove the task that was run in the run step above from its task queue.</li>
+<li>Microtasks: Perform a microtask checkpoint. //这里会执行所有的microtask</li>
+<li>Update the rendering: If this event loop is a browsing context event loop (as opposed to a worker event loop), then run the following substeps.<br>7.1 Let now be the value that would be returned by the Performance object’s now() method.<br>7.2 Let docs be the list of Document objects associated with the event loop in question, sorted arbitrarily except that the following conditions must be met:<br>7.3 If there are top-level browsing contexts B that the user agent believes would not benefit from having their rendering updated at this time, then remove from docs all Document objects whose browsing context’s top-level browsing context is in B.<br>7.4 If there are a nested browsing contexts B that the user agent believes would not benefit from having their rendering updated at this time, then remove from docs all Document objects whose browsing context is in B.<br>7.5 For each fully active Document in docs, run the resize steps for that Document, passing in now as the timestamp. [CSSOMVIEW]<br>7.6 For each fully active Document in docs, run the scroll steps for that Document, passing in now as the timestamp. [CSSOMVIEW]<br>7.7 For each fully active Document in docs, evaluate media queries and report changes for that Document, passing in now as the timestamp. [CSSOMVIEW]<br>7.8 For each fully active Document in docs, run CSS animations and send events for that Document, passing in now as the timestamp. [CSSANIMATIONS]<br>7.9 For each fully active Document in docs, run the fullscreen rendering steps for that Document, passing in now as the timestamp. [FULLSCREEN]<br>7.10 For each fully active Document in docs, run the animation frame callbacks for that Document, passing in now as the timestamp.<br>7.11 For each fully active Document in docs, run the update intersection observations steps for that Document, passing in now as the timestamp. [INTERSECTIONOBSERVER]<br>7.12 For each fully active Document in docs, update the rendering or user interface of that Document and its browsing context to reflect the current state.<br>If this is a worker event loop (i.e. one running for a WorkerGlobalScope), but there are no tasks in the event loop’s task queues and the WorkerGlobalScope object’s closing flag is true, then destroy the event loop, aborting these steps, resuming the run a worker steps described in the Web workers section below.<br>Return to the first step of the event loop.</li>
 </ol>
-<p>上述问题以后会继续研究，待续…</p>
 </blockquote>
+<p>复述一下上面说的</p>
+<blockquote>
+<p>在前5的步骤是找出存在task队列中时间最长的task，出队并将之执行。<br>在第六步的时候将microTask队列中的microTask全部执行<br>第七步，更新渲染：<br>7.2到7.4，当前轮次的event loop中关联到的document对象会保持某些特定顺序，这些document对象都会执行需要执行UI render的，但是并不是所有关联到的document都需要更新UI(换个说法就是只有从UI Render收益的documnet才需要更新)，浏览器会判断这个document是否会从UI Render中获益，因为浏览器只需要保持60Hz的刷新率即可，而每轮event loop都是非常快的，所以没必要每个document都Render UI。<br>7.5和7.6 run the resize steps/run the scroll steps不是说去执行resize和scroll。每次我们scoll的时候视口或者dom就已经立即scroll了，并把document或者dom加入到 pending scroll event targets中，而run the scroll steps具体做的则是遍历这些target，在target上触发scroll事件。run the resize steps也是相似的，这个步骤是触发resize事件。<br>7.8和7.9 后续的media query, run CSS animations and send events等等也是相似的，都是触发事件，第10步和第11步则是执行我们熟悉的requestAnimationFrame回调和IntersectionObserver回调（第十步还是挺关键的,raf就是在这执行的！）。<br>7.12 渲染UI，关键就在这了。<br>第九步 继续执行event loop，又去执行task，microtasks和UI render。</p>
+</blockquote>
+<p>个人理解是在event loop过程中，会循环检测各个task队列中的task，获取停留时间最久的task，出队并将之执行。在执行完后，会去检测microTask队列并执行在这个task过程中生成的microTask以及micorTask执行过程中生成microTask，在执行完成后进行页面的更新操作。<br>这里举个🌰：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">console.log(&apos;script start&apos;)</div><div class="line"></div><div class="line">setTimeout(() =&gt; console.log(&apos;setTimeout&apos;), 0)</div><div class="line"></div><div class="line">Promise.resolve().then(() =&gt; console.log(&apos;Promise1&apos;)).then(() =&gt; console.log(&apos;Promise2&apos;))</div><div class="line"></div><div class="line">console.log(&apos;script end&apos;)</div></pre></td></tr></table></figure></p>
+<p>执行结果如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">script start</div><div class="line">script end</div><div class="line">Promise1</div><div class="line">Promise2</div><div class="line">setTimeout</div></pre></td></tr></table></figure></p>
+<p>浏览器首先执行的是<code>script解析</code>的<code>task</code>，所以最先打印的是在这个task中执行的<code>console.log</code>，然后在这个过程中，Promise会生成了一个<code>microTask</code>并将其加入<code>microTask</code>队列中，<code>setTimeout</code>会生成一个task并将其加入task队列中。<br>在执行完script解析这个task后，会去检测microTask，此时microtask队列中存在一个由promise生成的microTask任务，将其执行后其返回结果又执行then，因此有生成一个microTask，将其加入到microTask队列中，执行完成后继续将microTask队列执行完成。<br>在microTask队列执行完成后继续检测task队列，此时存在一个setTimeout生成的task，将其完成后最终结果就如上所示。</p>
+<h4 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h4><ol>
+<li><a href="https://chuckliu.me/#!/posts/58bd08a2b5187d2fb51c04f9" target="_blank" rel="external">Vue源码详解之nextTick：MutationObserver只是浮云，microtask才是核心！</a></li>
+<li><a href="https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/" target="_blank" rel="external">Tasks, microtasks, queues and schedules</a></li>
+<li><a href="https://www.404forest.com/2017/07/18/how-javascript-actually-works-eventloop-and-uirendering/" target="_blank" rel="external">深入探究 eventloop 与浏览器渲染的时序问题 - 404Forest</a></li>
+</ol>
 
       
     </div>
@@ -383,7 +406,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Vue/" rel="tag"># Vue</a>
+            <a href="/tags/JavaScript，-笔记/" rel="tag"># JavaScript， 笔记</a>
           
         </div>
       
@@ -396,8 +419,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/26/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
+              <a href="/2017/10/26/双向数据绑定的实现/" rel="next" title="双向数据绑定的实现">
+                <i class="fa fa-chevron-left"></i> 双向数据绑定的实现
               </a>
             
           </div>
@@ -405,10 +428,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/10/27/event-loop学习回顾/" rel="prev" title="event loop学习回顾">
-                event loop学习回顾 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -560,7 +579,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#模仿vue的双向数据绑定"><span class="nav-number">1.</span> <span class="nav-text">模仿vue的双向数据绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#项目主要代码目录如下"><span class="nav-number">1.0.1.</span> <span class="nav-text">项目主要代码目录如下</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#双向数据绑定的实现逻辑"><span class="nav-number">1.0.2.</span> <span class="nav-text">双向数据绑定的实现逻辑</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#存在的问题"><span class="nav-number">1.0.3.</span> <span class="nav-text">存在的问题</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#task"><span class="nav-number">1.</span> <span class="nav-text">task</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#microTask"><span class="nav-number">2.</span> <span class="nav-text">microTask</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#event-loop的循环过程"><span class="nav-number">3.</span> <span class="nav-text">event loop的循环过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
 
           </div>
