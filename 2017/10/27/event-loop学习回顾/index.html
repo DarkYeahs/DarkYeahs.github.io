@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Yeahs&#39;s Blog">
 <meta property="og:description" content="以前事件队列在我的认知范围内是只有两种：同步事件队列与异步事件队列。在处理事件队列过程中，浏览器会定期检测同步队列并从同步事件队列获取事件，并将之执行，在这过程中，异步队列触发回调事件时，会将其从异步队列中出队，加入到同步事件队列中，一直重复上述过程。 但在这里有个疑问，当多个异步事件队列同时到同步队列过程中是以什么标准去实现的？ 这个疑问直到前段时间看Vue有关的博客中无意间看到Chunk li">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-27T07:30:13.000Z">
+<meta property="og:updated_time" content="2017-10-27T07:54:05.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="event loop学习回顾">
 <meta name="twitter:description" content="以前事件队列在我的认知范围内是只有两种：同步事件队列与异步事件队列。在处理事件队列过程中，浏览器会定期检测同步队列并从同步事件队列获取事件，并将之执行，在这过程中，异步队列触发回调事件时，会将其从异步队列中出队，加入到同步事件队列中，一直重复上述过程。 但在这里有个疑问，当多个异步事件队列同时到同步队列过程中是以什么标准去实现的？ 这个疑问直到前段时间看Vue有关的博客中无意间看到Chunk li">
@@ -364,7 +364,7 @@
 <li>MutationObserver</li>
 <li>Object.observe<br>其中Promise.then由于不同浏览器的实现有所不同，有些运行触发的是microTask，有些触发的触发的是task，不过标准上是触发microTask的</li>
 </ul>
-<h4 id="event-loop的循环过程"><a href="#event-loop的循环过程" class="headerlink" title="event loop的循环过程"></a>event loop的循环过程</h4><p>在说了task跟microTask的概念后再说下event loop的循环过程。先贴一下规范的说法(有点凑字数的嫌弃。。。)：</p>
+<h4 id="event-loop的循环过程"><a href="#event-loop的循环过程" class="headerlink" title="event loop的循环过程"></a>event loop的循环过程</h4><p>在说了task跟microTask的概念后再说下event loop的循环过程。先贴一下规范的说法(有点凑字数的嫌疑。。。)：</p>
 <blockquote>
 <p>An event loop must continually run through the following steps for as long as it exists:</p>
 <ol>
