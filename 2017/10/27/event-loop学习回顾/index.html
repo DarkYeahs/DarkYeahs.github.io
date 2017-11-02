@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Yeahs&#39;s Blog">
 <meta property="og:description" content="以前事件队列在我的认知范围内是只有两种：同步事件队列与异步事件队列。在处理事件队列过程中，浏览器会定期检测同步队列并从同步事件队列获取事件，并将之执行，在这过程中，异步队列触发回调事件时，会将其从异步队列中出队，加入到同步事件队列中，一直重复上述过程。 但在这里有个疑问，当多个异步事件队列同时到同步队列过程中是以什么标准去实现的？ 这个疑问直到前段时间看Vue有关的博客中无意间看到Chunk li">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-27T07:54:05.000Z">
+<meta property="og:updated_time" content="2017-11-02T06:54:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="event loop学习回顾">
 <meta name="twitter:description" content="以前事件队列在我的认知范围内是只有两种：同步事件队列与异步事件队列。在处理事件队列过程中，浏览器会定期检测同步队列并从同步事件队列获取事件，并将之执行，在这过程中，异步队列触发回调事件时，会将其从异步队列中出队，加入到同步事件队列中，一直重复上述过程。 但在这里有个疑问，当多个异步事件队列同时到同步队列过程中是以什么标准去实现的？ 这个疑问直到前段时间看Vue有关的博客中无意间看到Chunk li">
@@ -342,6 +342,17 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/10/27/event-loop学习回顾/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/10/27/event-loop学习回顾/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -415,7 +426,7 @@
 <blockquote>
 <p>在前5的步骤是找出存在task队列中时间最长的task，出队并将之执行。<br>在第六步的时候将microTask队列中的microTask全部执行<br>第七步，更新渲染：<br>7.2到7.4，当前轮次的event loop中关联到的document对象会保持某些特定顺序，这些document对象都会执行需要执行UI render的，但是并不是所有关联到的document都需要更新UI(换个说法就是只有从UI Render收益的documnet才需要更新)，浏览器会判断这个document是否会从UI Render中获益，因为浏览器只需要保持60Hz的刷新率即可，而每轮event loop都是非常快的，所以没必要每个document都Render UI。<br>7.5和7.6 run the resize steps/run the scroll steps不是说去执行resize和scroll。每次我们scoll的时候视口或者dom就已经立即scroll了，并把document或者dom加入到 pending scroll event targets中，而run the scroll steps具体做的则是遍历这些target，在target上触发scroll事件。run the resize steps也是相似的，这个步骤是触发resize事件。<br>7.8和7.9 后续的media query, run CSS animations and send events等等也是相似的，都是触发事件，第10步和第11步则是执行我们熟悉的requestAnimationFrame回调和IntersectionObserver回调（第十步还是挺关键的,raf就是在这执行的！）。<br>7.12 渲染UI，关键就在这了。<br>第九步 继续执行event loop，又去执行task，microtasks和UI render。</p>
 </blockquote>
-<p>个人理解是在event loop过程中，会循环检测各个task队列中的task，获取停留时间最久的task，出队并将之执行。在执行完后，会去检测microTask队列并执行在这个task过程中生成的microTask以及micorTask执行过程中生成microTask，在执行完成后进行页面的更新操作。<br>这里举个🌰：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">console.log(&apos;script start&apos;)</div><div class="line"></div><div class="line">setTimeout(() =&gt; console.log(&apos;setTimeout&apos;), 0)</div><div class="line"></div><div class="line">Promise.resolve().then(() =&gt; console.log(&apos;Promise1&apos;)).then(() =&gt; console.log(&apos;Promise2&apos;))</div><div class="line"></div><div class="line">console.log(&apos;script end&apos;)</div></pre></td></tr></table></figure></p>
+<p>个人理解是在event loop过程中，会循环检测各个task队列中的task，获取停留时间最久的task，出队并将之执行。在执行完后，会去检测microTask队列并执行在这个task过程中生成的microTask以及micorTask执行过程中生成microTask，在执行完成后进行页面的更新操作。<br>这里举个🌰：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(<span class="string">'script start'</span>)</div><div class="line"></div><div class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">'setTimeout'</span>), <span class="number">0</span>)</div><div class="line"></div><div class="line"><span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">'Promise1'</span>)).then(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">'Promise2'</span>))</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(<span class="string">'script end'</span>)</div></pre></td></tr></table></figure></p>
 <p>执行结果如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">script start</div><div class="line">script end</div><div class="line">Promise1</div><div class="line">Promise2</div><div class="line">setTimeout</div></pre></td></tr></table></figure></p>
 <p>浏览器首先执行的是<code>script解析</code>的<code>task</code>，所以最先打印的是在这个<code>task</code>中执行的<code>console.log</code>，然后在这个过程中，<code>Promise</code>会生成了一个<code>microTask</code>并将其加入<code>microTask</code>队列中，<code>setTimeout</code>会生成一个<code>task</code>并将其加入<code>task</code>队列中。<br>在执行完<code>script解析</code>这个<code>task</code>后，会去检测<code>microTask</code>队列，此时<code>microtask</code>队列中存在一个由<code>Promise</code>生成的<code>microTask</code>任务，将其执行后其返回结果又执行<code>then</code>，因此有生成一个<code>microTask</code>，将其加入到<code>microTask</code>队列中，执行完成后继续将<code>microTask</code>队列执行完成。<br>在<code>microTask</code>队列执行完成后继续检测<code>task</code>队列，此时存在一个<code>setTimeout</code>生成的<code>task</code>，将其完成后最终结果就如上所示。</p>
 <h4 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h4><ol>
@@ -498,7 +509,12 @@
 
   
     <div class="comments" id="comments">
-      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTU2NS84MTI5"></div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
     </div>
 
   
@@ -787,6 +803,26 @@
 
   
 
+    
+      <script id="dsq-count-scr" src="https://yeahs.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://blog.yeahs.cc/2017/10/27/event-loop学习回顾/';
+          this.page.identifier = '2017/10/27/event-loop学习回顾/';
+          this.page.title = 'event loop学习回顾';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://yeahs.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
 
 
 
@@ -799,21 +835,6 @@
   
 
 
-
-
-
-  
-    <script type="text/javascript">
-      (function(d, s) {
-        var j, e = d.getElementsByTagName(s)[0];
-        if (typeof LivereTower === 'function') { return; }
-        j = d.createElement(s);
-        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-        j.async = true;
-        e.parentNode.insertBefore(j, e);
-      })(document, 'script');
-    </script>
-  
 
 
 

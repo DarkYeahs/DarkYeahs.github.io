@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Yeahs&#39;s Blog">
 <meta property="og:description" content="昨天在GitHub上无意逛到了creeperyang的博客,在他博客的JavaScript问题集锦，看到了这道题：问题： 尝试解释下连等赋值的过程。下面的代码为什么是这样的输出？12345var a = &amp;#123;n: 1&amp;#125;;  var b = a;a.x = a = &amp;#123;n: 2&amp;#125;;  console.log(a.x);// --&amp;gt; undefined  co">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-31T02:48:01.000Z">
+<meta property="og:updated_time" content="2017-11-02T06:52:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于一道js题目的猜想">
 <meta name="twitter:description" content="昨天在GitHub上无意逛到了creeperyang的博客,在他博客的JavaScript问题集锦，看到了这道题：问题： 尝试解释下连等赋值的过程。下面的代码为什么是这样的输出？12345var a = &amp;#123;n: 1&amp;#125;;  var b = a;a.x = a = &amp;#123;n: 2&amp;#125;;  console.log(a.x);// --&amp;gt; undefined  co">
@@ -342,6 +342,17 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/10/31/关于一道js题目的猜想/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/10/31/关于一道js题目的猜想/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -377,12 +388,12 @@
       
 
       
-        <p>昨天在GitHub上无意逛到了<a href="https://github.com/creeperyang/blog" target="_blank" rel="external">creeperyang的博客</a>,在他博客的<a href="https://github.com/creeperyang/blog/issues/2" target="_blank" rel="external">JavaScript问题集锦</a>，看到了这道题：<br><strong>问题：</strong> 尝试解释下连等赋值的过程。下面的代码为什么是这样的输出？<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var a = &#123;n: 1&#125;;  </div><div class="line">var b = a;</div><div class="line">a.x = a = &#123;n: 2&#125;;  </div><div class="line">console.log(a.x);// --&gt; undefined  </div><div class="line">console.log(b.x);// --&gt; &#123;n:2&#125;</div></pre></td></tr></table></figure></p>
+        <p>昨天在GitHub上无意逛到了<a href="https://github.com/creeperyang/blog" target="_blank" rel="external">creeperyang的博客</a>,在他博客的<a href="https://github.com/creeperyang/blog/issues/2" target="_blank" rel="external">JavaScript问题集锦</a>，看到了这道题：<br><strong>问题：</strong> 尝试解释下连等赋值的过程。下面的代码为什么是这样的输出？<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = &#123;<span class="attr">n</span>: <span class="number">1</span>&#125;;  </div><div class="line"><span class="keyword">var</span> b = a;</div><div class="line">a.x = a = &#123;<span class="attr">n</span>: <span class="number">2</span>&#125;;  </div><div class="line"><span class="built_in">console</span>.log(a.x);<span class="comment">// --&gt; undefined  </span></div><div class="line"><span class="built_in">console</span>.log(b.x);<span class="comment">// --&gt; &#123;n:2&#125;</span></div></pre></td></tr></table></figure></p>
 <p>博主是这样解释的：</p>
 <blockquote>
 <p>按照<code>es5</code>规范，题中连等赋值等价于<br><code>a.x = (a = {n: 2});</code>，按优先获取左引用（<code>lref</code>），然后获取右引用（<code>rref</code>）的顺序，<code>a.x</code>和<code>a</code>中的<code>a</code>都指向了<code>{n: 1}</code>。至此，至关重要或者说最迷惑的一步明确。<code>(a = {n: 2})</code>执行完成后，变量<code>a</code>指向<code>{n: 2</code>}，并返回<code>{n: 2}</code>;接着执行<code>a.x = {n: 2}</code>，这里的<code>a</code>就是<code>b</code>（指向<code>{n: 1}</code>），所以<code>b.x</code>就指向了<code>{n: 2}</code>。</p>
 </blockquote>
-<p>后面自己想了下有点解释不通，因为当<code>a</code>的指向更改的时候，<code>a.x</code>中的<code>a</code>指向也应该同时更改，那么<code>x</code>属性也应该是在新的对象上添加，为什么会说这里的<code>a</code>仍然就是<code>b</code>即指向的是<code>{n: 1}</code>,所以对原代码进行了改造：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var a = &#123;n: 1&#125;;  </div><div class="line">var b = a;</div><div class="line">function test () &#123;</div><div class="line">  return a = &#123;n: 2&#125;;</div><div class="line">&#125;</div><div class="line">a.x = test();</div><div class="line">console.log(a.x);// --&gt; undefined  </div><div class="line">console.log(b.x);// --&gt; &#123;n:2&#125;</div></pre></td></tr></table></figure></p>
+<p>后面自己想了下有点解释不通，因为当<code>a</code>的指向更改的时候，<code>a.x</code>中的<code>a</code>指向也应该同时更改，那么<code>x</code>属性也应该是在新的对象上添加，为什么会说这里的<code>a</code>仍然就是<code>b</code>即指向的是<code>{n: 1}</code>,所以对原代码进行了改造：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = &#123;<span class="attr">n</span>: <span class="number">1</span>&#125;;  </div><div class="line"><span class="keyword">var</span> b = a;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> a = &#123;<span class="attr">n</span>: <span class="number">2</span>&#125;;</div><div class="line">&#125;</div><div class="line">a.x = test();</div><div class="line"><span class="built_in">console</span>.log(a.x);<span class="comment">// --&gt; undefined  </span></div><div class="line"><span class="built_in">console</span>.log(b.x);<span class="comment">// --&gt; &#123;n:2&#125;</span></div></pre></td></tr></table></figure></p>
 <p>运行结果与原结果相同。在使用<code>chrome</code>的<code>debugger</code>查看代码运行的时候，发现<code>chrome</code>在运行过程中，运行到<code>a.x = test()</code>这行代码的时候会停留在<code>a.x</code>再运行<code>test()</code>,联系到关于属性在原型链上的搜索，作出以下的解释：<br><code>a.x = a = {n: 2}</code>在运行过程中浏览器会首先尝试读取属性x的值，即在<code>{n: 1}</code>上搜索x属性，在搜索不到的前提下又由于赋值的操作，会在<code>{n: 1}</code>上创建<code>x</code>属性并且<code>x</code>属性指向<code>{n: 2}</code>,由于<code>a</code>的指向发生变更,所以<code>a.x</code>为<code>undefined</code>,<code>b.x</code>为<code>{n: 2}</code></p>
 
       
@@ -457,7 +468,12 @@
 
   
     <div class="comments" id="comments">
-      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTU2NS84MTI5"></div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
     </div>
 
   
@@ -721,6 +737,26 @@
 
   
 
+    
+      <script id="dsq-count-scr" src="https://yeahs.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://blog.yeahs.cc/2017/10/31/关于一道js题目的猜想/';
+          this.page.identifier = '2017/10/31/关于一道js题目的猜想/';
+          this.page.title = '关于一道js题目的猜想';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://yeahs.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
 
 
 
@@ -733,21 +769,6 @@
   
 
 
-
-
-
-  
-    <script type="text/javascript">
-      (function(d, s) {
-        var j, e = d.getElementsByTagName(s)[0];
-        if (typeof LivereTower === 'function') { return; }
-        j = d.createElement(s);
-        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-        j.async = true;
-        e.parentNode.insertBefore(j, e);
-      })(document, 'script');
-    </script>
-  
 
 
 

@@ -343,6 +343,17 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/02/JavaScript执行上下文知识整理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/02/JavaScript执行上下文知识整理/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -380,54 +391,18 @@
       
         
           
-            <p>前几天在GitHub上看到了<a href="https://github.com/mqyqingfeng" target="_blank" rel="external">mqyqingfeng</a>的博客，在上面看了他的<a href="https://github.com/mqyqingfeng/Blog/issues/17" target="_blank" rel="external">JavaScript深入系列</a>中关于执行上下文部分的讲述，对于JavaScript的执行上下文有了进一步的了解,在这里总结下我新的认识。</p>
-<h3 id="执行上下文"><a href="#执行上下文" class="headerlink" title="执行上下文"></a>执行上下文</h3><p>首先说下什么是执行上下文，HTML规范上是这么说的</p>
-<blockquote>
-<p>When control is transferred to ECMAScript executable code, control is entering an execution context. Active execution contexts logically form a stack. The top execution context on this logical stack is the running execution context. A new execution context is created whenever control is transferred from the executable code associated with the currently running execution context to executable code that is not associated with that execution context. The newly created execution context is pushed onto the stack and becomes the running execution context.</p>
-</blockquote>
-<p>简单的来说就是当可执行代码被执行的时候，会创建一个执行上下文，这个上下文就是当前可执行代码的执行环境。并且多个执行上下文会构成一个执行上下文栈，栈底部始终存在着一个GlobalContext。其中可执行代码分为1. 全局代码;2. 函数代码;3. eval代码。</p>
-<p>对于每个执行上下文，都有三个重要属性：</p>
-<ul>
-<li>变量对象(Variable object，VO)</li>
-<li>作用域链(Scope chain)</li>
-<li>this</li>
-</ul>
-<h3 id="变量对象"><a href="#变量对象" class="headerlink" title="变量对象"></a>变量对象</h3><p>变量对象是与执行上下文相关的数据作用域，存储了在上下文中定义的变量和函数声明。其中，在函数上下文中，我们用活动对象(activation object, AO)来表示变量对象。</p>
-<p>活动对象和变量对象其实是一个东西，只是变量对象是规范上的或者说是引擎实现上的，不可在 JavaScript 环境中访问，只有到当进入一个执行上下文中，这个执行上下文的变量对象才会被激活，所以才叫 activation object，而只有被激活的变量对象，也就是活动对象上的各种属性才能被访问。</p>
-<p>活动对象是在进入函数上下文时刻被创建的，它通过函数的 arguments 属性初始化。arguments 属性值是 Arguments 对象。</p>
-<p>执行上下文的代码会分成两个阶段进行处理：分析和执行。</p>
-<ol>
-<li><p>分析<br>当进入执行上下文时，这时候只是进行代码的解析(变量命名的提升就在这一阶段)，<br>变量对象会包括：<br>a) 函数的所有形参 (如果是函数上下文)</p>
-<ul>
-<li>由名称和对应值组成的一个变量对象的属性被创建</li>
-<li>没有实参，属性值设为 undefined</li>
-</ul>
-<p>b) 函数声明</p>
-<ul>
-<li>由名称和对应值（函数对象(function-object)）组成一个变量对象的属性被创建</li>
-<li>如果变量对象已经存在相同名称的属性，则完全替换这个属性</li>
-</ul>
-<p>c) 变量声明</p>
-<ul>
-<li>由名称和对应值（undefined）组成一个变量对象的属性被创建；</li>
-<li>如果变量名称跟已经声明的形式参数或函数相同，则变量声明不会干扰已经存在的这类属性</li>
-</ul>
-</li>
-<li><p>执行<br>在执行阶段，浏览器会顺序执行代码，根据代码，修改变量对象的值</p>
-</li>
-</ol>
-<p>举个🌰：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">function foo (a) &#123;</div><div class="line">  var b = 1</div><div class="line">  function bar () &#123;</div><div class="line">  &#125;</div><div class="line">  var d = function () &#123;&#125;</div><div class="line">  b = 2</div><div class="line">&#125;</div><div class="line">foo(1)</div></pre></td></tr></table></figure></p>
-<p>在分析阶段，这个时候的AO是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">AO = &#123;</div><div class="line">    arguments: &#123;</div><div class="line">        0: 1,</div><div class="line">        length: 1</div><div class="line">    &#125;,</div><div class="line">    a: 1,</div><div class="line">    b: undefined,</div><div class="line">    bar: reference to function c()&#123;&#125;,</div><div class="line">    d: undefined</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>在执行阶段，这个时候的AO是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">AO = &#123;</div><div class="line">    arguments: &#123;</div><div class="line">        0: 1,</div><div class="line">        length: 1</div><div class="line">    &#125;,</div><div class="line">    a: 1,</div><div class="line">    b: 2,</div><div class="line">    bar: reference to function c()&#123;&#125;,</div><div class="line">    d: reference to FunctionExpression &quot;d&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="作用域链"><a href="#作用域链" class="headerlink" title="作用域链"></a>作用域链</h3><p>在上面说到每个上下文都有一个变量对象，而由多个上下文的变量对象构成的链表就叫做作用域链。<br>其中，函数的作用域链在函数定义的时候就决定了。在函数创建的时候，会把所有的父变量对象保存到函数的一个内部属性中。<br>举个🌰：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">function foo() &#123;</div><div class="line">    function bar() &#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>函数创建时，各自的[[scope]]为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">foo.[[scope]] = [</div><div class="line">  globalContext.VO</div><div class="line">];</div><div class="line"></div><div class="line">bar.[[scope]] = [</div><div class="line">    fooContext.AO,</div><div class="line">    globalContext.VO</div><div class="line">];</div></pre></td></tr></table></figure></p>
-<p>当函数激活时，进入函数上下文，创建 VO/AO 后，就会将活动对象添加到作用链的前端。</p>
-<p>这时候执行上下文的作用域链，我们命名为 Scope：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Scope = [AO].concat([[Scope]]);</div></pre></td></tr></table></figure>
-<p>至此，作用域链创建完毕。</p>
-<p>this再这里就先不展开了，单纯从ECMAScript的角度讲有点绕，也有点多。。。懒病又犯了。。。</p>
+          前几天在GitHub上看到了mqyqingfeng的博客，在上面看了他的JavaScript深入系列中关于执行上下文部分的讲述，对于JavaScript的执行上下文有了进一步的了解,在这里总结下我新的认识。
+执行上下文首先说下什么是执行上下文，HTML规范上是这么说的
 
-          
+When control i
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/11/02/JavaScript执行上下文知识整理/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -541,6 +516,17 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/10/31/关于一道js题目的猜想/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/10/31/关于一道js题目的猜想/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -578,15 +564,15 @@
       
         
           
-            <p>昨天在GitHub上无意逛到了<a href="https://github.com/creeperyang/blog" target="_blank" rel="external">creeperyang的博客</a>,在他博客的<a href="https://github.com/creeperyang/blog/issues/2" target="_blank" rel="external">JavaScript问题集锦</a>，看到了这道题：<br><strong>问题：</strong> 尝试解释下连等赋值的过程。下面的代码为什么是这样的输出？<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var a = &#123;n: 1&#125;;  </div><div class="line">var b = a;</div><div class="line">a.x = a = &#123;n: 2&#125;;  </div><div class="line">console.log(a.x);// --&gt; undefined  </div><div class="line">console.log(b.x);// --&gt; &#123;n:2&#125;</div></pre></td></tr></table></figure></p>
-<p>博主是这样解释的：</p>
-<blockquote>
-<p>按照<code>es5</code>规范，题中连等赋值等价于<br><code>a.x = (a = {n: 2});</code>，按优先获取左引用（<code>lref</code>），然后获取右引用（<code>rref</code>）的顺序，<code>a.x</code>和<code>a</code>中的<code>a</code>都指向了<code>{n: 1}</code>。至此，至关重要或者说最迷惑的一步明确。<code>(a = {n: 2})</code>执行完成后，变量<code>a</code>指向<code>{n: 2</code>}，并返回<code>{n: 2}</code>;接着执行<code>a.x = {n: 2}</code>，这里的<code>a</code>就是<code>b</code>（指向<code>{n: 1}</code>），所以<code>b.x</code>就指向了<code>{n: 2}</code>。</p>
-</blockquote>
-<p>后面自己想了下有点解释不通，因为当<code>a</code>的指向更改的时候，<code>a.x</code>中的<code>a</code>指向也应该同时更改，那么<code>x</code>属性也应该是在新的对象上添加，为什么会说这里的<code>a</code>仍然就是<code>b</code>即指向的是<code>{n: 1}</code>,所以对原代码进行了改造：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var a = &#123;n: 1&#125;;  </div><div class="line">var b = a;</div><div class="line">function test () &#123;</div><div class="line">  return a = &#123;n: 2&#125;;</div><div class="line">&#125;</div><div class="line">a.x = test();</div><div class="line">console.log(a.x);// --&gt; undefined  </div><div class="line">console.log(b.x);// --&gt; &#123;n:2&#125;</div></pre></td></tr></table></figure></p>
-<p>运行结果与原结果相同。在使用<code>chrome</code>的<code>debugger</code>查看代码运行的时候，发现<code>chrome</code>在运行过程中，运行到<code>a.x = test()</code>这行代码的时候会停留在<code>a.x</code>再运行<code>test()</code>,联系到关于属性在原型链上的搜索，作出以下的解释：<br><code>a.x = a = {n: 2}</code>在运行过程中浏览器会首先尝试读取属性x的值，即在<code>{n: 1}</code>上搜索x属性，在搜索不到的前提下又由于赋值的操作，会在<code>{n: 1}</code>上创建<code>x</code>属性并且<code>x</code>属性指向<code>{n: 2}</code>,由于<code>a</code>的指向发生变更,所以<code>a.x</code>为<code>undefined</code>,<code>b.x</code>为<code>{n: 2}</code></p>
-
-          
+          昨天在GitHub上无意逛到了creeperyang的博客,在他博客的JavaScript问题集锦，看到了这道题：问题： 尝试解释下连等赋值的过程。下面的代码为什么是这样的输出？12345var a = &#123;n: 1&#125;;  var b = a;a.x = a = &#123;n: 
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/10/31/关于一道js题目的猜想/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -700,6 +686,17 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/10/28/Vue2-x周期简述/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/10/28/Vue2-x周期简述/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -737,14 +734,15 @@
       
         
           
-            <p>首先贴一张大图，跟vue1.x相比。vue2.0渲染周期发生了较大的变化。Vue的生命周期变为beforeCreate（Vue1.x为created），created（vue1.x为beforeCompile），beforeMount（vue1.x为compile），mounted（vue1.x为ready）以及beforeDestroy，destroyed.<br><img src="https://vuejs.org/images/lifecycle.png" alt="image"></p>
-<h3 id="beforeCreate周期"><a href="#beforeCreate周期" class="headerlink" title="beforeCreate周期"></a>beforeCreate周期</h3><p>在beforeCreate周期前是获取不到任何数据的，这个周期只是进行事件的初始化以及生命周期的初始化，在完成事件的初始化以及生命周期的初始化后会触发beforeCreate的钩子函数，对于无关数据与渲染后的dom操作的可以在这个周期开始执行</p>
-<h3 id="created周期"><a href="#created周期" class="headerlink" title="created周期"></a>created周期</h3><p>在created周期前，对数据通过vue本身改造Object.prototype.setter 和Object.prototype.getter两个函数对传入的数据进行监听，在这个周期可以对无关dom的操作进行处理，比如根据传入的数据获取后台数据等操作可以在这个周期进行</p>
-<h3 id="beforeMount周期"><a href="#beforeMount周期" class="headerlink" title="beforeMount周期"></a>beforeMount周期</h3><p>在这个周期主要完成虚拟dom操作，Vue会去检测是否有没有el这个配置，如果没有，则会等待vm.$mounted(el)的调用。接着检测是否有没有template这个配置。如果有，这将这个传入render函数进行编译，如果没有，则将el元素内部的dom作为template参数传入render。对于这个周期如果不涉及到事件绑定方面的事件可以在这个周期进行操作</p>
-<h3 id="mounted周期"><a href="#mounted周期" class="headerlink" title="mounted周期"></a>mounted周期</h3><p>这个周期是完成将构建的虚拟dom渲染到页面上的操作，这个时候可以对整个页面进行渲染完成后的各种动态操作</p>
-<h3 id="beforeDestroy周期和destroyed周期"><a href="#beforeDestroy周期和destroyed周期" class="headerlink" title="beforeDestroy周期和destroyed周期"></a>beforeDestroy周期和destroyed周期</h3><p>beforeDestroy周期和destroyed周期主要涉及到组件的!销毁,目前尚未涉及，等涉及了再补上</p>
-
-          
+          首先贴一张大图，跟vue1.x相比。vue2.0渲染周期发生了较大的变化。Vue的生命周期变为beforeCreate（Vue1.x为created），created（vue1.x为beforeCompile），beforeMount（vue1.x为compile），mounted（vue1.x为r
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/10/28/Vue2-x周期简述/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -858,6 +856,17 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/10/27/event-loop学习回顾/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/10/27/event-loop学习回顾/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -895,54 +904,16 @@
       
         
           
-            <p>以前事件队列在我的认知范围内是只有两种：同步事件队列与异步事件队列。在处理事件队列过程中，浏览器会定期检测同步队列并从同步事件队列获取事件，并将之执行，在这过程中，异步队列触发回调事件时，会将其从异步队列中出队，加入到同步事件队列中，一直重复上述过程。</p>
-<p>但在这里有个疑问，当多个异步事件队列同时到同步队列过程中是以什么标准去实现的？</p>
-<p>这个疑问直到前段时间看Vue有关的博客中无意间看到Chunk liu的<a href="https://chuckliu.me/#!/posts/58bd08a2b5187d2fb51c04f9" target="_blank" rel="external">Vue源码详解之nextTick：MutationObserver只是浮云，microtask才是核心</a>才了解到microTask的概念，才知道task的区分不是我原先理解的那么一回事。后面又读了Jake Archibald 写的<a href="https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/" target="_blank" rel="external">Tasks， microtasks， queues and schedules</a>才知道event loop到底是个怎么回事。</p>
-<p>先说下task跟microTask的概念</p>
-<h4 id="task"><a href="#task" class="headerlink" title="task"></a>task</h4><p>task 又称 macrotask。HTML 规范中 task 的有关章节是这么说的：</p>
-<blockquote>
-<p>一个 eventloop 有一或多个 task 队列。每个 task 由一个确定的 task 源提供。从不同 task 源而来的 task 可能会放到不同的 task 队列中。例如，浏览器可能单独为鼠标键盘事件维护一个 task 队列，所有其他 task 都放到另一个 task 队列。通过区分 task 队列的优先级，使高优先级的 task 优先执行，保证更好的交互体验。</p>
-</blockquote>
-<p>task源包括：</p>
-<ul>
-<li>DOM 操作任务源：如元素以非阻塞方式插入文档</li>
-<li>用户交互任务源：如鼠标键盘事件。用户输入事件（如 click） 必须使用 task 队列</li>
-<li>网络任务源：如 XHR 回调</li>
-<li>history 回溯任务源：使用 history.back() 或者类似 API<br>此外 setTimeout、setInterval、IndexDB 数据库操作等也是任务源。</li>
-</ul>
-<h4 id="microTask"><a href="#microTask" class="headerlink" title="microTask"></a>microTask</h4><p>microTask：规范上是这么说的：每个event loop都有一个microTask， microTask存在于microTask队列中。<br>microTask主要分以下几种：</p>
-<ul>
-<li>Promise.then</li>
-<li>MutationObserver</li>
-<li>Object.observe<br>其中Promise.then由于不同浏览器的实现有所不同，有些运行触发的是microTask，有些触发的触发的是task，不过标准上是触发microTask的</li>
-</ul>
-<h4 id="event-loop的循环过程"><a href="#event-loop的循环过程" class="headerlink" title="event loop的循环过程"></a>event loop的循环过程</h4><p>在说了task跟microTask的概念后再说下event loop的循环过程。先贴一下规范的说法(有点凑字数的嫌疑。。。)：</p>
-<blockquote>
-<p>An event loop must continually run through the following steps for as long as it exists:</p>
-<ol>
-<li>Select the oldest task on one of the event loop’s task queues, if any, ignoring, in the case of a browsing context event loop, tasks whose associated Documents are not fully active. The user agent may pick any task queue. If there is no task to select, then jump to the microtasks step below.</li>
-<li>Set the event loop’s currently running task to the task selected in the previous step.</li>
-<li>Run: Run the selected task.</li>
-<li>Set the event loop’s currently running task back to null.</li>
-<li>Remove the task that was run in the run step above from its task queue.</li>
-<li>Microtasks: Perform a microtask checkpoint. //这里会执行所有的microtask</li>
-<li>Update the rendering: If this event loop is a browsing context event loop (as opposed to a worker event loop), then run the following substeps.<br>7.1 Let now be the value that would be returned by the Performance object’s now() method.<br>7.2 Let docs be the list of Document objects associated with the event loop in question, sorted arbitrarily except that the following conditions must be met:<br>7.3 If there are top-level browsing contexts B that the user agent believes would not benefit from having their rendering updated at this time, then remove from docs all Document objects whose browsing context’s top-level browsing context is in B.<br>7.4 If there are a nested browsing contexts B that the user agent believes would not benefit from having their rendering updated at this time, then remove from docs all Document objects whose browsing context is in B.<br>7.5 For each fully active Document in docs, run the resize steps for that Document, passing in now as the timestamp. [CSSOMVIEW]<br>7.6 For each fully active Document in docs, run the scroll steps for that Document, passing in now as the timestamp. [CSSOMVIEW]<br>7.7 For each fully active Document in docs, evaluate media queries and report changes for that Document, passing in now as the timestamp. [CSSOMVIEW]<br>7.8 For each fully active Document in docs, run CSS animations and send events for that Document, passing in now as the timestamp. [CSSANIMATIONS]<br>7.9 For each fully active Document in docs, run the fullscreen rendering steps for that Document, passing in now as the timestamp. [FULLSCREEN]<br>7.10 For each fully active Document in docs, run the animation frame callbacks for that Document, passing in now as the timestamp.<br>7.11 For each fully active Document in docs, run the update intersection observations steps for that Document, passing in now as the timestamp. [INTERSECTIONOBSERVER]<br>7.12 For each fully active Document in docs, update the rendering or user interface of that Document and its browsing context to reflect the current state.<br>If this is a worker event loop (i.e. one running for a WorkerGlobalScope), but there are no tasks in the event loop’s task queues and the WorkerGlobalScope object’s closing flag is true, then destroy the event loop, aborting these steps, resuming the run a worker steps described in the Web workers section below.<br>Return to the first step of the event loop.</li>
-</ol>
-</blockquote>
-<p>复述一下上面说的</p>
-<blockquote>
-<p>在前5的步骤是找出存在task队列中时间最长的task，出队并将之执行。<br>在第六步的时候将microTask队列中的microTask全部执行<br>第七步，更新渲染：<br>7.2到7.4，当前轮次的event loop中关联到的document对象会保持某些特定顺序，这些document对象都会执行需要执行UI render的，但是并不是所有关联到的document都需要更新UI(换个说法就是只有从UI Render收益的documnet才需要更新)，浏览器会判断这个document是否会从UI Render中获益，因为浏览器只需要保持60Hz的刷新率即可，而每轮event loop都是非常快的，所以没必要每个document都Render UI。<br>7.5和7.6 run the resize steps/run the scroll steps不是说去执行resize和scroll。每次我们scoll的时候视口或者dom就已经立即scroll了，并把document或者dom加入到 pending scroll event targets中，而run the scroll steps具体做的则是遍历这些target，在target上触发scroll事件。run the resize steps也是相似的，这个步骤是触发resize事件。<br>7.8和7.9 后续的media query, run CSS animations and send events等等也是相似的，都是触发事件，第10步和第11步则是执行我们熟悉的requestAnimationFrame回调和IntersectionObserver回调（第十步还是挺关键的,raf就是在这执行的！）。<br>7.12 渲染UI，关键就在这了。<br>第九步 继续执行event loop，又去执行task，microtasks和UI render。</p>
-</blockquote>
-<p>个人理解是在event loop过程中，会循环检测各个task队列中的task，获取停留时间最久的task，出队并将之执行。在执行完后，会去检测microTask队列并执行在这个task过程中生成的microTask以及micorTask执行过程中生成microTask，在执行完成后进行页面的更新操作。<br>这里举个🌰：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">console.log(&apos;script start&apos;)</div><div class="line"></div><div class="line">setTimeout(() =&gt; console.log(&apos;setTimeout&apos;), 0)</div><div class="line"></div><div class="line">Promise.resolve().then(() =&gt; console.log(&apos;Promise1&apos;)).then(() =&gt; console.log(&apos;Promise2&apos;))</div><div class="line"></div><div class="line">console.log(&apos;script end&apos;)</div></pre></td></tr></table></figure></p>
-<p>执行结果如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">script start</div><div class="line">script end</div><div class="line">Promise1</div><div class="line">Promise2</div><div class="line">setTimeout</div></pre></td></tr></table></figure></p>
-<p>浏览器首先执行的是<code>script解析</code>的<code>task</code>，所以最先打印的是在这个<code>task</code>中执行的<code>console.log</code>，然后在这个过程中，<code>Promise</code>会生成了一个<code>microTask</code>并将其加入<code>microTask</code>队列中，<code>setTimeout</code>会生成一个<code>task</code>并将其加入<code>task</code>队列中。<br>在执行完<code>script解析</code>这个<code>task</code>后，会去检测<code>microTask</code>队列，此时<code>microtask</code>队列中存在一个由<code>Promise</code>生成的<code>microTask</code>任务，将其执行后其返回结果又执行<code>then</code>，因此有生成一个<code>microTask</code>，将其加入到<code>microTask</code>队列中，执行完成后继续将<code>microTask</code>队列执行完成。<br>在<code>microTask</code>队列执行完成后继续检测<code>task</code>队列，此时存在一个<code>setTimeout</code>生成的<code>task</code>，将其完成后最终结果就如上所示。</p>
-<h4 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h4><ol>
-<li><a href="https://chuckliu.me/#!/posts/58bd08a2b5187d2fb51c04f9" target="_blank" rel="external">Vue源码详解之nextTick：MutationObserver只是浮云，microtask才是核心！</a></li>
-<li><a href="https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/" target="_blank" rel="external">Tasks, microtasks, queues and schedules</a></li>
-<li><a href="https://www.404forest.com/2017/07/18/how-javascript-actually-works-eventloop-and-uirendering/" target="_blank" rel="external">深入探究 eventloop 与浏览器渲染的时序问题 - 404Forest</a></li>
-</ol>
-
-          
+          以前事件队列在我的认知范围内是只有两种：同步事件队列与异步事件队列。在处理事件队列过程中，浏览器会定期检测同步队列并从同步事件队列获取事件，并将之执行，在这过程中，异步队列触发回调事件时，会将其从异步队列中出队，加入到同步事件队列中，一直重复上述过程。
+但在这里有个疑问，当多个异步事件队列同时到同步
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/10/27/event-loop学习回顾/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1056,6 +1027,17 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/10/26/双向数据绑定的实现/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/10/26/双向数据绑定的实现/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -1093,31 +1075,18 @@
       
         
           
-            <h2 id="模仿vue的双向数据绑定"><a href="#模仿vue的双向数据绑定" class="headerlink" title="模仿vue的双向数据绑定"></a>模仿vue的双向数据绑定</h2><blockquote>
-<p>前段时间听了TGideas的一场交流会之后萌生了自己实现数据双向绑定的想法，于是在参考了<a href="https://github.com/DMQ/mvvm" target="_blank" rel="external">DMQ/mvvm: 剖析vue实现原理，自己动手实现mvvm</a>的逻辑后用TypeScript实现了一套简单的双向数据绑定的库<br>项目地址在这<a href="https://github.com/DarkYeahs/Yue" target="_blank" rel="external">学习vue的双向数据绑定</a></p>
-<h4 id="项目主要代码目录如下"><a href="#项目主要代码目录如下" class="headerlink" title="项目主要代码目录如下"></a>项目主要代码目录如下</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">src</div><div class="line">|--Yue</div><div class="line">|--|--util</div><div class="line">|--|--|--CompileUtil.ts</div><div class="line">|--|--|--Updater.ts</div><div class="line">|--|--Yue.ts</div><div class="line">|--|--Observer.ts</div><div class="line">|--|--Compile.ts</div><div class="line">|--|--Observer.ts</div><div class="line">|--|--Dep.ts</div><div class="line">|--|--Watcher.ts</div><div class="line">|--index.ts</div></pre></td></tr></table></figure>
-<p>整个项目通过src目录下的index.ts对外暴露引用，主体类是Yue目录下的Yue.ts。<br>同时Yue类下面还有Observer.ts以及Compile.ts两个主要类。Observer类是用来建立Yue实例化后对象下的data数据的监测，Compile类是负责将自定义的一套html语法糖编译成浏览器所能理解的dom树<br>util目录下存放着CompileUtil以及Updater两个工具类，CompileUtil类是编译工具类，Updater是数据更新工具类</p>
-</blockquote>
-<h4 id="双向数据绑定的实现逻辑"><a href="#双向数据绑定的实现逻辑" class="headerlink" title="双向数据绑定的实现逻辑"></a>双向数据绑定的实现逻辑</h4><blockquote>
-<p>具体逻辑可以参考<a href="https://github.com/DMQ/mvvm" target="_blank" rel="external">DMQ/mvvm: 剖析vue实现原理，自己动手实现mvvm</a>这篇所讲的，我只是大概讲一下关于自己的理解。</p>
-<ol>
-<li>建立对数据的监测。在<code>Observer</code>这个类中使用<code>Object.defineProperty</code>方法重新定义data上的数据，实现对data的数据劫持。在这个过程中为每个属性节点建立一个发布者，这个发布者是针对对应的属性节点以及其后代属性的。</li>
-<li>模版的转换。<ul>
-<li>模版的获取。通过<code>document.createDocumentFragment</code>方法创建一个文档碎片，并通过appendChild方法将编译范围内的dom&gt;从文档树中移除并加入到文档碎片中。</li>
-<li>模版的编译。通过<code>node.childNodes</code>递归遍历每个dom节点，使用正则匹配判断每个节点是否存在需要编译的文本，若存在，则将其跟data上的数据进行匹配，并创建一个订阅者将其加入到相应的发布者中。</li>
-</ul>
-</li>
-<li>通过在数据监测以及dom数据绑定的过程构建发布-订阅的设计模式，实现了双向数据绑定</li>
-</ol>
-</blockquote>
-<h4 id="存在的问题"><a href="#存在的问题" class="headerlink" title="存在的问题"></a>存在的问题</h4><blockquote>
-<ol>
-<li>在编译模版中多次引用同个data上的数据会导致重复的<code>Watcher</code>创建。</li>
-</ol>
-<p>上述问题以后会继续研究，待续…</p>
-</blockquote>
+          模仿vue的双向数据绑定
+前段时间听了TGideas的一场交流会之后萌生了自己实现数据双向绑定的想法，于是在参考了DMQ/mvvm: 剖析vue实现原理，自己动手实现mvvm的逻辑后用TypeScript实现了一套简单的双向数据绑定的库项目地址在这学习vue的双向数据绑定
 
-          
+项目主要代码目录如下12
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/10/26/双向数据绑定的实现/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1415,6 +1384,14 @@
 
   
 
+    
+      <script id="dsq-count-scr" src="https://yeahs.disqus.com/count.js" async></script>
+    
+
+    
+
+  
+
 
 
 
@@ -1427,10 +1404,6 @@
   
 
 
-
-
-
-  
 
 
 

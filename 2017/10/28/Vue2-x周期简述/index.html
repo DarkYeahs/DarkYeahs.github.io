@@ -88,7 +88,7 @@
 <meta property="og:description" content="首先贴一张大图，跟vue1.x相比。vue2.0渲染周期发生了较大的变化。Vue的生命周期变为beforeCreate（Vue1.x为created），created（vue1.x为beforeCompile），beforeMount（vue1.x为compile），mounted（vue1.x为ready）以及beforeDestroy，destroyed. beforeCreate周期在bef">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://vuejs.org/images/lifecycle.png">
-<meta property="og:updated_time" content="2017-10-28T15:08:39.000Z">
+<meta property="og:updated_time" content="2017-11-02T06:54:54.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue2.x周期简述">
 <meta name="twitter:description" content="首先贴一张大图，跟vue1.x相比。vue2.0渲染周期发生了较大的变化。Vue的生命周期变为beforeCreate（Vue1.x为created），created（vue1.x为beforeCompile），beforeMount（vue1.x为compile），mounted（vue1.x为ready）以及beforeDestroy，destroyed. beforeCreate周期在bef">
@@ -344,6 +344,17 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/10/28/Vue2-x周期简述/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/10/28/Vue2-x周期简述/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -460,7 +471,12 @@
 
   
     <div class="comments" id="comments">
-      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTU2NS84MTI5"></div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
     </div>
 
   
@@ -749,6 +765,26 @@
 
   
 
+    
+      <script id="dsq-count-scr" src="https://yeahs.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://blog.yeahs.cc/2017/10/28/Vue2-x周期简述/';
+          this.page.identifier = '2017/10/28/Vue2-x周期简述/';
+          this.page.title = 'Vue2.x周期简述';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://yeahs.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
 
 
 
@@ -761,21 +797,6 @@
   
 
 
-
-
-
-  
-    <script type="text/javascript">
-      (function(d, s) {
-        var j, e = d.getElementsByTagName(s)[0];
-        if (typeof LivereTower === 'function') { return; }
-        j = d.createElement(s);
-        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-        j.async = true;
-        e.parentNode.insertBefore(j, e);
-      })(document, 'script');
-    </script>
-  
 
 
 
