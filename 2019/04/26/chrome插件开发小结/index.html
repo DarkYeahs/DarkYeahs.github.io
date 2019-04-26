@@ -96,18 +96,18 @@
 
 
 
-  <meta name="description" content="模仿vue的双向数据绑定 前段时间听了TGideas的一场交流会之后萌生了自己实现数据双向绑定的想法，于是在参考了DMQ/mvvm: 剖析vue实现原理，自己动手实现mvvm的逻辑后用TypeScript实现了一套简单的双向数据绑定的库项目地址在这学习vue的双向数据绑定  项目主要代码目录如下123456789101112src|--Yue|--|--util|--|--|--CompileUt">
-<meta name="keywords" content="Vue">
+  <meta name="description" content="&amp;nbsp;&amp;nbsp;最近写了一个很简单的chrome插件todolist，一个很常见的任务列表插件，主要功能有  任务列表展示 任务完成操作 任务新增 桌面通知  &amp;nbsp;&amp;nbsp;项目地址是这个todoList,整理下开发的流程以及开发过程中遇到的问题。 开发历程&amp;nbsp;&amp;nbsp;这里讲的是开发过程的目录结构，chrome会读取根目录下的manifest.json文件配置,这里项">
+<meta name="keywords" content="chrome 插件开发">
 <meta property="og:type" content="article">
-<meta property="og:title" content="双向数据绑定的实现">
-<meta property="og:url" content="http://blog.yeahs.cc/2017/10/26/双向数据绑定的实现/index.html">
+<meta property="og:title" content="chrome插件开发小结">
+<meta property="og:url" content="http://blog.yeahs.cc/2019/04/26/chrome插件开发小结/index.html">
 <meta property="og:site_name" content="Yeahs&#39;s Blog">
-<meta property="og:description" content="模仿vue的双向数据绑定 前段时间听了TGideas的一场交流会之后萌生了自己实现数据双向绑定的想法，于是在参考了DMQ/mvvm: 剖析vue实现原理，自己动手实现mvvm的逻辑后用TypeScript实现了一套简单的双向数据绑定的库项目地址在这学习vue的双向数据绑定  项目主要代码目录如下123456789101112src|--Yue|--|--util|--|--|--CompileUt">
+<meta property="og:description" content="&amp;nbsp;&amp;nbsp;最近写了一个很简单的chrome插件todolist，一个很常见的任务列表插件，主要功能有  任务列表展示 任务完成操作 任务新增 桌面通知  &amp;nbsp;&amp;nbsp;项目地址是这个todoList,整理下开发的流程以及开发过程中遇到的问题。 开发历程&amp;nbsp;&amp;nbsp;这里讲的是开发过程的目录结构，chrome会读取根目录下的manifest.json文件配置,这里项">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-25T03:06:43.118Z">
+<meta property="og:updated_time" content="2019-04-26T06:07:32.597Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="双向数据绑定的实现">
-<meta name="twitter:description" content="模仿vue的双向数据绑定 前段时间听了TGideas的一场交流会之后萌生了自己实现数据双向绑定的想法，于是在参考了DMQ/mvvm: 剖析vue实现原理，自己动手实现mvvm的逻辑后用TypeScript实现了一套简单的双向数据绑定的库项目地址在这学习vue的双向数据绑定  项目主要代码目录如下123456789101112src|--Yue|--|--util|--|--|--CompileUt">
+<meta name="twitter:title" content="chrome插件开发小结">
+<meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;最近写了一个很简单的chrome插件todolist，一个很常见的任务列表插件，主要功能有  任务列表展示 任务完成操作 任务新增 桌面通知  &amp;nbsp;&amp;nbsp;项目地址是这个todoList,整理下开发的流程以及开发过程中遇到的问题。 开发历程&amp;nbsp;&amp;nbsp;这里讲的是开发过程的目录结构，chrome会读取根目录下的manifest.json文件配置,这里项">
 
 
 
@@ -115,7 +115,7 @@
 
   
   
-  <link rel="canonical" href="http://blog.yeahs.cc/2017/10/26/双向数据绑定的实现/">
+  <link rel="canonical" href="http://blog.yeahs.cc/2019/04/26/chrome插件开发小结/">
 
 
 
@@ -125,7 +125,7 @@
   };
 </script>
 
-  <title>双向数据绑定的实现 | Yeahs's Blog</title>
+  <title>chrome插件开发小结 | Yeahs's Blog</title>
   
 
 
@@ -317,7 +317,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.yeahs.cc/2017/10/26/双向数据绑定的实现/">
+    <link itemprop="mainEntityOfPage" href="http://blog.yeahs.cc/2019/04/26/chrome插件开发小结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yeahs">
@@ -334,7 +334,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">双向数据绑定的实现
+          <h1 class="post-title" itemprop="name headline">chrome插件开发小结
 
               
             
@@ -360,24 +360,12 @@
                 
               
 
-              <time title="创建时间：2017-10-26 16:38:18" itemprop="dateCreated datePublished" datetime="2017-10-26T16:38:18+08:00">2017-10-26</time>
+              <time title="创建时间：2019-04-26 11:37:41 / 修改时间：14:07:32" itemprop="dateCreated datePublished" datetime="2019-04-26T11:37:41+08:00">2019-04-26</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-04-25 11:06:43" itemprop="dateModified" datetime="2019-04-25T11:06:43+08:00">2019-04-25</time>
               
             
           </span>
@@ -429,33 +417,38 @@
       
 
       
-        <h2 id="模仿vue的双向数据绑定"><a href="#模仿vue的双向数据绑定" class="headerlink" title="模仿vue的双向数据绑定"></a>模仿vue的双向数据绑定</h2><blockquote>
-<p>前段时间听了TGideas的一场交流会之后萌生了自己实现数据双向绑定的想法，于是在参考了<a href="https://github.com/DMQ/mvvm" target="_blank" rel="noopener">DMQ/mvvm: 剖析vue实现原理，自己动手实现mvvm</a>的逻辑后用TypeScript实现了一套简单的双向数据绑定的库<br>项目地址在这<a href="https://github.com/DarkYeahs/Yue" target="_blank" rel="noopener">学习vue的双向数据绑定</a></p>
-</blockquote>
-<h4 id="项目主要代码目录如下"><a href="#项目主要代码目录如下" class="headerlink" title="项目主要代码目录如下"></a>项目主要代码目录如下</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">src</span><br><span class="line">|--Yue</span><br><span class="line">|--|--util</span><br><span class="line">|--|--|--CompileUtil.ts</span><br><span class="line">|--|--|--Updater.ts</span><br><span class="line">|--|--Yue.ts</span><br><span class="line">|--|--Observer.ts</span><br><span class="line">|--|--Compile.ts</span><br><span class="line">|--|--Observer.ts</span><br><span class="line">|--|--Dep.ts</span><br><span class="line">|--|--Watcher.ts</span><br><span class="line">|--index.ts</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>整个项目通过src目录下的index.ts对外暴露引用，主体类是Yue目录下的Yue.ts。<br>同时Yue类下面还有Observer.ts以及Compile.ts两个主要类。Observer类是用来建立Yue实例化后对象下的data数据的监测，Compile类是负责将自定义的一套html语法糖编译成浏览器所能理解的dom树<br>util目录下存放着CompileUtil以及Updater两个工具类，CompileUtil类是编译工具类，Updater是数据更新工具类</p>
-</blockquote>
-<h4 id="双向数据绑定的实现逻辑"><a href="#双向数据绑定的实现逻辑" class="headerlink" title="双向数据绑定的实现逻辑"></a>双向数据绑定的实现逻辑</h4><blockquote>
-<p>具体逻辑可以参考<a href="https://github.com/DMQ/mvvm" target="_blank" rel="noopener">DMQ/mvvm: 剖析vue实现原理，自己动手实现mvvm</a>这篇所讲的，我只是大概讲一下关于自己的理解。</p>
-<ol>
-<li>建立对数据的监测。在<code>Observer</code>这个类中使用<code>Object.defineProperty</code>方法重新定义data上的数据，实现对data的数据劫持。在这个过程中为每个属性节点建立一个发布者，这个发布者是针对对应的属性节点以及其后代属性的。</li>
-<li>模版的转换。<ul>
-<li>模版的获取。通过<code>document.createDocumentFragment</code>方法创建一个文档碎片，并通过appendChild方法将编译范围内的dom&gt;从文档树中移除并加入到文档碎片中。</li>
-<li>模版的编译。通过<code>node.childNodes</code>递归遍历每个dom节点，使用正则匹配判断每个节点是否存在需要编译的文本，若存在，则将其跟data上的数据进行匹配，并创建一个订阅者将其加入到相应的发布者中。</li>
+        <p>&nbsp;&nbsp;最近写了一个很简单的chrome插件todolist，一个很常见的任务列表插件，主要功能有</p>
+<ul>
+<li>任务列表展示</li>
+<li>任务完成操作</li>
+<li>任务新增</li>
+<li>桌面通知</li>
 </ul>
+<p>&nbsp;&nbsp;项目地址是这个<a href="https://github.com/DarkYeahs/todoList" target="_blank" rel="noopener">todoList</a>,整理下开发的流程以及开发过程中遇到的问题。</p>
+<h5 id="开发历程"><a href="#开发历程" class="headerlink" title="开发历程"></a>开发历程</h5><p>&nbsp;&nbsp;这里讲的是开发过程的目录结构，chrome会读取根目录下的<code>manifest.json</code>文件配置,这里项目的配置如下<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"manifest_version"</span>: <span class="number">2</span>,</span><br><span class="line"></span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"todolist"</span>,</span><br><span class="line">    <span class="attr">"version"</span>: <span class="string">"1.0"</span>,</span><br><span class="line">    <span class="attr">"description"</span>: <span class="string">"todolist"</span>,</span><br><span class="line">    <span class="attr">"icons"</span>: &#123;</span><br><span class="line">        <span class="attr">"16"</span>: <span class="string">"images/icon16.png"</span>,</span><br><span class="line">        <span class="attr">"48"</span>: <span class="string">"images/icon48.png"</span>,</span><br><span class="line">        <span class="attr">"128"</span>: <span class="string">"images/icon128.png"</span></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="attr">"browser_action"</span>: &#123;</span><br><span class="line">        <span class="attr">"default_icon"</span>: &#123;</span><br><span class="line">            <span class="attr">"19"</span>: <span class="string">"images/icon19.png"</span>,</span><br><span class="line">            <span class="attr">"38"</span>: <span class="string">"images/icon38.png"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">"default_title"</span>: <span class="string">"个人计划列表"</span>,</span><br><span class="line">        <span class="attr">"default_popup"</span>: <span class="string">"./dist/popup.html"</span></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="attr">"permissions"</span>: [</span><br><span class="line">        <span class="string">"*://*/"</span>,</span><br><span class="line">        <span class="string">"notifications"</span></span><br><span class="line">    ],</span><br><span class="line"></span><br><span class="line">    <span class="attr">"web_accessible_resources"</span>: [</span><br><span class="line">        <span class="string">"images/*.png"</span></span><br><span class="line">    ],</span><br><span class="line"></span><br><span class="line">    <span class="attr">"background"</span>: &#123;</span><br><span class="line">        <span class="attr">"page"</span>: <span class="string">"./dist/background.html"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"content_security_policy"</span>: <span class="string">"script-src 'self' 'unsafe-eval' http://localhost:4000; object-src 'self';"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>&nbsp;&nbsp;第一个字段<code>manifest_version</code>指的是使用的<code>manifest.json</code>的版本，目前1的版本已经被废弃了，所以使用的是2的版本。<code>name</code>、<code>version</code>、<code>description</code>以及<code>icon</code>字段分别对应插件名、插件版本、插件描述以及插件icon,这些配置会在插件安装的时候展示给用户。</p>
+<p>&nbsp;&nbsp;<code>browser_action</code>字段则是声明会在浏览器的工具栏添加的操作，在这里声明了在工具栏添加一个icon以及对应的popup页面</p>
+<p>&nbsp;&nbsp;<code>permissions</code>，<code>web_accessible_resources</code>则是声明插件需要的权限以及接收资源的格式，这里申请的是chrome桌面通知权限以及网络请求权限（PS:这里通配符匹配了任意请求地址），接收的资源格式是<code>images/*.png</code>格式</p>
+<p>&nbsp;&nbsp;<code>background</code>则是声明后台常驻脚本/页面</p>
+<p>&nbsp;&nbsp;项目主要由两部分构成，一个是popup页面以及后台运行页面，popup页面在用户打开工作栏上对应的插件按钮时会运行展示，后台运行页面则是在浏览器打开的时候就会在后台运行，直到浏览器关闭才会停止。</p>
+<p>&nbsp;&nbsp;popup页面主要的功能有</p>
+<ul>
+<li>任务列表展示</li>
+<li>任务列表状态更改</li>
+<li>任务新增</li>
+</ul>
+<p>&nbsp;&nbsp;后台页面主要的功能有</p>
+<ul>
+<li>数据请求</li>
+<li>任务通知</li>
+</ul>
+<p>内容比较简单，具体可以参照代码查看。</p>
+<h5 id="开发中遇到的问题"><a href="#开发中遇到的问题" class="headerlink" title="开发中遇到的问题"></a>开发中遇到的问题</h5><ol>
+<li>跨域问题<br> 在popup页面上不能进行跨域请求，处理的方式，将请求发起放到<code>background.html</code>上，popup页面通过调用chrome的<code>chrome.runtime.sendMessage</code>向<code>background.html</code>发起请求，由<code>background.html</code>向服务端发起请求并将请求到的结果返回给popup页面。</li>
+<li>页面点击会导致以下报错，但不会导致页面本身执行失败<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Refused to execute JavaScript URL because it violates the following Content Security Policy directive: &quot;script-src &apos;self&apos; chrome-extension://&quot;. Either the &apos;unsafe-inline&apos; keyword, a hash (&apos;sha256-...&apos;), or a nonce (&apos;nonce-...&apos;) is required to enable inline execution.</span><br></pre></td></tr></table></figure>
 </li>
-<li>通过在数据监测以及dom数据绑定的过程构建发布-订阅的设计模式，实现了双向数据绑定</li>
 </ol>
-</blockquote>
-<h4 id="存在的问题"><a href="#存在的问题" class="headerlink" title="存在的问题"></a>存在的问题</h4><blockquote>
-<ol>
-<li>在编译模版中多次引用同个data上的数据会导致重复的<code>Watcher</code>创建。</li>
-</ol>
-</blockquote>
-<blockquote>
-<p>上述问题以后会继续研究，待续…</p>
-</blockquote>
+<p>搜了下是chrome插件关于CSP的协议的控制，chrome最新的插件不允许内联js运行，搜索代码发现是因为<code>href=&quot;javascript:;&quot;</code>导致的，将<code>href=&quot;javascript:;&quot;</code>去除即可</p>
 
       
     </div>
@@ -479,7 +472,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Vue/" rel="tag"># Vue</a>
+            <a href="/tags/chrome-插件开发/" rel="tag"># chrome 插件开发</a>
           
         </div>
       
@@ -492,15 +485,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/04/25/浏览器请求缓存整理/" rel="next" title="缓存整理">
+                <i class="fa fa-chevron-left"></i> 缓存整理
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/10/27/event-loop学习回顾/" rel="prev" title="event loop学习回顾">
-                event loop学习回顾 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -681,7 +674,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#模仿vue的双向数据绑定"><span class="nav-number">1.</span> <span class="nav-text">模仿vue的双向数据绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#项目主要代码目录如下"><span class="nav-number">1.0.1.</span> <span class="nav-text">项目主要代码目录如下</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#双向数据绑定的实现逻辑"><span class="nav-number">1.0.2.</span> <span class="nav-text">双向数据绑定的实现逻辑</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#存在的问题"><span class="nav-number">1.0.3.</span> <span class="nav-text">存在的问题</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#开发历程"><span class="nav-number">1.</span> <span class="nav-text">开发历程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#开发中遇到的问题"><span class="nav-number">2.</span> <span class="nav-text">开发中遇到的问题</span></a></li></ol></div>
             
 
           </div>

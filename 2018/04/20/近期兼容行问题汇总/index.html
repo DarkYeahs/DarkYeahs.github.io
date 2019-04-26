@@ -96,18 +96,18 @@
 
 
 
-  <meta name="description" content="前几天在GitHub上看到了mqyqingfeng的博客，在上面看了他的JavaScript深入系列中关于执行上下文部分的讲述，对于JavaScript的执行上下文有了进一步的了解,在这里总结下我新的认识。 执行上下文首先说下什么是执行上下文，HTML规范上是这么说的  When control is transferred to ECMAScript executable code, contr">
-<meta name="keywords" content="笔记,JavaScript">
+  <meta name="description" content="整理下近期工作中遇到的问题 安卓rem兼容问题 在部分安卓机型里存在1rem不等于根元素上字体大小的问题。理论上如果设定根元素大小为16px，那么1rem应该就等于16px，但是在部分安卓机型（常见vivo，oppo机型）中会出现1rem不等于16px的现象。此时可以根据根元素的字体大小设定一个dom元素插入文档，通过调用dom元素上的getBoundingClientRect获取元素在dom文档">
+<meta name="keywords" content="笔记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JavaScript执行上下文知识整理">
-<meta property="og:url" content="http://blog.yeahs.cc/2017/11/02/JavaScript执行上下文知识整理/index.html">
+<meta property="og:title" content="近期问题汇总">
+<meta property="og:url" content="http://blog.yeahs.cc/2018/04/20/近期兼容行问题汇总/index.html">
 <meta property="og:site_name" content="Yeahs&#39;s Blog">
-<meta property="og:description" content="前几天在GitHub上看到了mqyqingfeng的博客，在上面看了他的JavaScript深入系列中关于执行上下文部分的讲述，对于JavaScript的执行上下文有了进一步的了解,在这里总结下我新的认识。 执行上下文首先说下什么是执行上下文，HTML规范上是这么说的  When control is transferred to ECMAScript executable code, contr">
+<meta property="og:description" content="整理下近期工作中遇到的问题 安卓rem兼容问题 在部分安卓机型里存在1rem不等于根元素上字体大小的问题。理论上如果设定根元素大小为16px，那么1rem应该就等于16px，但是在部分安卓机型（常见vivo，oppo机型）中会出现1rem不等于16px的现象。此时可以根据根元素的字体大小设定一个dom元素插入文档，通过调用dom元素上的getBoundingClientRect获取元素在dom文档">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-25T03:06:43.116Z">
+<meta property="og:updated_time" content="2019-04-25T11:27:53.417Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JavaScript执行上下文知识整理">
-<meta name="twitter:description" content="前几天在GitHub上看到了mqyqingfeng的博客，在上面看了他的JavaScript深入系列中关于执行上下文部分的讲述，对于JavaScript的执行上下文有了进一步的了解,在这里总结下我新的认识。 执行上下文首先说下什么是执行上下文，HTML规范上是这么说的  When control is transferred to ECMAScript executable code, contr">
+<meta name="twitter:title" content="近期问题汇总">
+<meta name="twitter:description" content="整理下近期工作中遇到的问题 安卓rem兼容问题 在部分安卓机型里存在1rem不等于根元素上字体大小的问题。理论上如果设定根元素大小为16px，那么1rem应该就等于16px，但是在部分安卓机型（常见vivo，oppo机型）中会出现1rem不等于16px的现象。此时可以根据根元素的字体大小设定一个dom元素插入文档，通过调用dom元素上的getBoundingClientRect获取元素在dom文档">
 
 
 
@@ -115,7 +115,7 @@
 
   
   
-  <link rel="canonical" href="http://blog.yeahs.cc/2017/11/02/JavaScript执行上下文知识整理/">
+  <link rel="canonical" href="http://blog.yeahs.cc/2018/04/20/近期兼容行问题汇总/">
 
 
 
@@ -125,7 +125,7 @@
   };
 </script>
 
-  <title>JavaScript执行上下文知识整理 | Yeahs's Blog</title>
+  <title>近期问题汇总 | Yeahs's Blog</title>
   
 
 
@@ -317,7 +317,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.yeahs.cc/2017/11/02/JavaScript执行上下文知识整理/">
+    <link itemprop="mainEntityOfPage" href="http://blog.yeahs.cc/2018/04/20/近期兼容行问题汇总/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yeahs">
@@ -334,7 +334,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">JavaScript执行上下文知识整理
+          <h1 class="post-title" itemprop="name headline">近期问题汇总
 
               
             
@@ -360,7 +360,7 @@
                 
               
 
-              <time title="创建时间：2017-11-02 10:43:01" itemprop="dateCreated datePublished" datetime="2017-11-02T10:43:01+08:00">2017-11-02</time>
+              <time title="创建时间：2018-04-20 14:41:05" itemprop="dateCreated datePublished" datetime="2018-04-20T14:41:05+08:00">2018-04-20</time>
             
 
             
@@ -377,7 +377,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-25 11:06:43" itemprop="dateModified" datetime="2019-04-25T11:06:43+08:00">2019-04-25</time>
+                <time title="修改时间：2019-04-25 19:27:53" itemprop="dateModified" datetime="2019-04-25T19:27:53+08:00">2019-04-25</time>
               
             
           </span>
@@ -429,52 +429,23 @@
       
 
       
-        <p>前几天在GitHub上看到了<a href="https://github.com/mqyqingfeng" target="_blank" rel="noopener">mqyqingfeng</a>的博客，在上面看了他的<a href="https://github.com/mqyqingfeng/Blog/issues/17" target="_blank" rel="noopener">JavaScript深入系列</a>中关于执行上下文部分的讲述，对于JavaScript的执行上下文有了进一步的了解,在这里总结下我新的认识。</p>
-<h3 id="执行上下文"><a href="#执行上下文" class="headerlink" title="执行上下文"></a>执行上下文</h3><p>首先说下什么是执行上下文，HTML规范上是这么说的</p>
-<blockquote>
-<p>When control is transferred to ECMAScript executable code, control is entering an execution context. Active execution contexts logically form a stack. The top execution context on this logical stack is the running execution context. A new execution context is created whenever control is transferred from the executable code associated with the currently running execution context to executable code that is not associated with that execution context. The newly created execution context is pushed onto the stack and becomes the running execution context.</p>
-</blockquote>
-<p>简单的来说就是当可执行代码被执行的时候，会创建一个执行上下文，这个上下文就是当前可执行代码的执行环境。并且多个执行上下文会构成一个执行上下文栈，栈底部始终存在着一个GlobalContext。其中可执行代码分为1. 全局代码;2. 函数代码;3. eval代码。</p>
-<p>对于每个执行上下文，都有三个重要属性：</p>
-<ul>
-<li>变量对象(Variable object，VO)</li>
-<li>作用域链(Scope chain)</li>
-<li>this</li>
+        <p>整理下近期工作中遇到的问题</p>
+<h4 id="安卓"><a href="#安卓" class="headerlink" title="安卓"></a>安卓</h4><h5 id="rem兼容问题"><a href="#rem兼容问题" class="headerlink" title="rem兼容问题"></a>rem兼容问题</h5><ul>
+<li>在部分安卓机型里存在1rem不等于根元素上字体大小的问题。<br>理论上如果设定根元素大小为16px，那么1rem应该就等于16px，但是在部分安卓机型（常见vivo，oppo机型）中会出现1rem不等于16px的现象。此时可以根据根元素的字体大小设定一个dom元素插入文档，通过调用dom元素上的getBoundingClientRect获取元素在dom文档中实际的大小，通过理论的数值与真实的数值进行判断。如果两个数值不等，则将根元素上的字体大小按照理论数值与真实数值的比例放大或者缩小。</li>
+<li>如果使用rem进行布局，那么会经常出现计算出来的元素大小像素存在小数点，而浏览器渲染页面是按照屏幕的渲染单位进行渲染的，这种情况下无法避免，只能在布局中进行留意。</li>
 </ul>
-<h3 id="变量对象"><a href="#变量对象" class="headerlink" title="变量对象"></a>变量对象</h3><p>变量对象是与执行上下文相关的数据作用域，存储了在上下文中定义的变量和函数声明。其中，在函数上下文中，我们用活动对象(activation object, AO)来表示变量对象。</p>
-<p>活动对象和变量对象其实是一个东西，只是变量对象是规范上的或者说是引擎实现上的，不可在 JavaScript 环境中访问，只有到当进入一个执行上下文中，这个执行上下文的变量对象才会被激活，所以才叫 activation object，而只有被激活的变量对象，也就是活动对象上的各种属性才能被访问。</p>
-<p>活动对象是在进入函数上下文时刻被创建的，它通过函数的 arguments 属性初始化。arguments 属性值是 Arguments 对象。</p>
-<p>执行上下文的代码会分成两个阶段进行处理：分析和执行。</p>
-<ol>
-<li><p>分析<br>当进入执行上下文时，这时候只是进行代码的解析(变量命名的提升就在这一阶段)，<br>变量对象会包括：<br>a) 函数的所有形参 (如果是函数上下文)</p>
-<ul>
-<li>由名称和对应值组成的一个变量对象的属性被创建</li>
-<li>没有实参，属性值设为 undefined</li>
+<h5 id="placeholder字体发生变化会导致placeholder字体发生位移"><a href="#placeholder字体发生变化会导致placeholder字体发生位移" class="headerlink" title="placeholder字体发生变化会导致placeholder字体发生位移"></a>placeholder字体发生变化会导致placeholder字体发生位移</h5><p>通过设定::-webkit-input-placeholder对input下的placeholder属性设定的预留字体进行加粗变化字体类型会导致placeholder设定的字体在小米手机上发生位移</p>
+<h5 id="华为"><a href="#华为" class="headerlink" title="华为"></a>华为</h5><ul>
+<li>华为不支持多行flex布局。华为机型不支持多行flex布局，因为大多数华为机型只支持古老的flex-box布局，flex-box不支持多行布局，只支持单行的flex布局。所以在选定多行布局的时候，对flex的使用要多加谨慎，且对flex的预编译要选定兼容到最老的那一个选项。</li>
+<li>虽然在移动端使用transform以及设定translate3D可以开启硬件加速，但是要考虑在部分机型使用后页面滑动元素滚动怪异的问题，常见于页面发生滑动，使用了transform属性的元素会滞后滑动（不同步滑动）<h5 id="多数安卓浏览器播放视频会使用自身的浏览器，且浏览器无法被遮盖"><a href="#多数安卓浏览器播放视频会使用自身的浏览器，且浏览器无法被遮盖" class="headerlink" title="多数安卓浏览器播放视频会使用自身的浏览器，且浏览器无法被遮盖"></a>多数安卓浏览器播放视频会使用自身的浏览器，且浏览器无法被遮盖</h5></li>
 </ul>
-<p>b) 函数声明</p>
-<ul>
-<li>由名称和对应值（函数对象(function-object)）组成一个变量对象的属性被创建</li>
-<li>如果变量对象已经存在相同名称的属性，则完全替换这个属性</li>
+<h4 id="ios"><a href="#ios" class="headerlink" title="ios"></a>ios</h4><ul>
+<li>vue以及react后退会导致页面空白</li>
+<li>ios下元素需要使用onstarttouch属性才能激活元素的active渲染</li>
+<li>iphoneX在safari浏览器横屏下两边会自动留白<h4 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h4></li>
+<li>使用webpack打包时如果webpack的配置中output.jsonpfunction配置重复会导致打包资源发生冲突</li>
+<li>offline-plugin 离线资源加载优化，二次加载的时间可以优化到只需要原先加载时间的1/3，但使用会导致qq分享失败，影响到qq的分享接口的api报错（问题暂时未知）</li>
 </ul>
-<p>c) 变量声明</p>
-<ul>
-<li>由名称和对应值（undefined）组成一个变量对象的属性被创建；</li>
-<li>如果变量名称跟已经声明的形式参数或函数相同，则变量声明不会干扰已经存在的这类属性</li>
-</ul>
-</li>
-<li><p>执行<br>在执行阶段，浏览器会顺序执行代码，根据代码，修改变量对象的值</p>
-</li>
-</ol>
-<p>举个🌰：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span> (<span class="params">a</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> b = <span class="number">1</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">bar</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">var</span> d = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">  b = <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line">foo(<span class="number">1</span>)</span><br></pre></td></tr></table></figure></p>
-<p>在分析阶段，这个时候的AO是：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">AO = &#123;</span><br><span class="line">    <span class="built_in">arguments</span>: &#123;</span><br><span class="line">        <span class="number">0</span>: <span class="number">1</span>,</span><br><span class="line">        length: <span class="number">1</span></span><br><span class="line">    &#125;,</span><br><span class="line">    a: <span class="number">1</span>,</span><br><span class="line">    b: <span class="literal">undefined</span>,</span><br><span class="line">    bar: reference to <span class="function"><span class="keyword">function</span> <span class="title">c</span>(<span class="params"></span>)</span>&#123;&#125;,</span><br><span class="line">    d: <span class="literal">undefined</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>在执行阶段，这个时候的AO是：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">AO = &#123;</span><br><span class="line">    <span class="built_in">arguments</span>: &#123;</span><br><span class="line">        <span class="number">0</span>: <span class="number">1</span>,</span><br><span class="line">        length: <span class="number">1</span></span><br><span class="line">    &#125;,</span><br><span class="line">    a: <span class="number">1</span>,</span><br><span class="line">    b: <span class="number">2</span>,</span><br><span class="line">    bar: reference to <span class="function"><span class="keyword">function</span> <span class="title">c</span>(<span class="params"></span>)</span>&#123;&#125;,</span><br><span class="line">    d: reference to FunctionExpression <span class="string">"d"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="作用域链"><a href="#作用域链" class="headerlink" title="作用域链"></a>作用域链</h3><p>在上面说到每个上下文都有一个变量对象，而由多个上下文的变量对象构成的链表就叫做作用域链。<br>其中，函数的作用域链在函数定义的时候就决定了。在函数创建的时候，会把所有的父变量对象保存到函数的一个内部属性中。<br>举个🌰：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>函数创建时，各自的[[scope]]为：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">foo.[[scope]] = [</span><br><span class="line">  globalContext.VO</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line">bar.[[scope]] = [</span><br><span class="line">    fooContext.AO,</span><br><span class="line">    globalContext.VO</span><br><span class="line">];</span><br></pre></td></tr></table></figure></p>
-<p>当函数激活时，进入函数上下文，创建 VO/AO 后，就会将活动对象添加到作用链的前端。</p>
-<p>这时候执行上下文的作用域链，我们命名为 Scope：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Scope = [AO].concat([[Scope]]);</span><br></pre></td></tr></table></figure>
-<p>至此，作用域链创建完毕。</p>
-<p>this再这里就先不展开了，单纯从ECMAScript的角度讲有点绕，也有点多。。。懒病又犯了。。。</p>
 
       
     </div>
@@ -500,8 +471,6 @@
           
             <a href="/tags/笔记/" rel="tag"># 笔记</a>
           
-            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
-          
         </div>
       
 
@@ -513,8 +482,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/31/关于一道js题目的猜想/" rel="next" title="关于一道js题目的猜想">
-                <i class="fa fa-chevron-left"></i> 关于一道js题目的猜想
+              <a href="/2017/11/02/JavaScript执行上下文知识整理/" rel="next" title="JavaScript执行上下文知识整理">
+                <i class="fa fa-chevron-left"></i> JavaScript执行上下文知识整理
               </a>
             
           </div>
@@ -523,8 +492,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/04/20/近期兼容行问题汇总/" rel="prev" title="近期问题汇总">
-                近期问题汇总 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/04/25/浏览器请求缓存整理/" rel="prev" title="缓存整理">
+                缓存整理 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -706,7 +675,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#执行上下文"><span class="nav-number">1.</span> <span class="nav-text">执行上下文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变量对象"><span class="nav-number">2.</span> <span class="nav-text">变量对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#作用域链"><span class="nav-number">3.</span> <span class="nav-text">作用域链</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#安卓"><span class="nav-number">1.</span> <span class="nav-text">安卓</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#rem兼容问题"><span class="nav-number">1.1.</span> <span class="nav-text">rem兼容问题</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#placeholder字体发生变化会导致placeholder字体发生位移"><span class="nav-number">1.2.</span> <span class="nav-text">placeholder字体发生变化会导致placeholder字体发生位移</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#华为"><span class="nav-number">1.3.</span> <span class="nav-text">华为</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#多数安卓浏览器播放视频会使用自身的浏览器，且浏览器无法被遮盖"><span class="nav-number">1.4.</span> <span class="nav-text">多数安卓浏览器播放视频会使用自身的浏览器，且浏览器无法被遮盖</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ios"><span class="nav-number">2.</span> <span class="nav-text">ios</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#工具"><span class="nav-number">3.</span> <span class="nav-text">工具</span></a></li></ol></div>
             
 
           </div>
