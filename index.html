@@ -15,11 +15,11 @@
 
 
 <html class="theme-next gemini use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222"/>
 
 
 
@@ -44,9 +44,9 @@
 
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2"/>
 
-<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+<link rel="stylesheet" href="/css/main.css?v=7.1.0"/>
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
@@ -113,7 +113,7 @@
 
   
   
-  <link rel="canonical" href="http://blog.yeahs.cc/">
+  <link rel="canonical" href="http://blog.yeahs.cc/"/>
 
 
 
@@ -230,7 +230,7 @@
 
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>首页</a>
 
   </li>
         
@@ -247,7 +247,7 @@
 
     
 
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br/>标签</a>
 
   </li>
         
@@ -264,7 +264,7 @@
 
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>归档</a>
 
   </li>
 
@@ -316,16 +316,559 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.yeahs.cc/2019/04/28/HTTP状态码/">
+    <link itemprop="mainEntityOfPage" href="http://blog.yeahs.cc/2019/05/03/几种布局的比较/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yeahs">
-      <meta itemprop="description" content="这是一个很懒的人。。。">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yeahs"/>
+      <meta itemprop="description" content="这是一个很懒的人。。。"/>
+      <meta itemprop="image" content="/images/avatar.jpg"/>
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Yeahs's Blog">
+      <meta itemprop="name" content="Yeahs's Blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/05/03/几种布局的比较/" class="post-title-link" itemprop="url">css布局小结</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-03 23:28:28" itemprop="dateCreated datePublished" datetime="2019-05-03T23:28:28+08:00">2019-05-03</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-04 16:53:46" itemprop="dateModified" datetime="2019-05-04T16:53:46+08:00">2019-05-04</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/notes/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>
+              整理下几种布局常用的代码：
+position 定位position的属性指定一个元素在文档中的定位方式，有以下几种属性：
+
+static(默认)：元素框正常生成。块级元素生成一个矩形框，作为文档流的一部分；行内元素则会创建一个或多个行框，置于其父元素中。
+relative：元素框相对于之前正常文档流
+              ...
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/05/03/几种布局的比较/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.yeahs.cc/2019/05/03/bfc,盒子模型小结/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yeahs"/>
+      <meta itemprop="description" content="这是一个很懒的人。。。"/>
+      <meta itemprop="image" content="/images/avatar.jpg"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yeahs's Blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/05/03/bfc,盒子模型小结/" class="post-title-link" itemprop="url">bfc,盒子模型小结</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-03 00:48:54 / 修改时间：11:11:53" itemprop="dateCreated datePublished" datetime="2019-05-03T00:48:54+08:00">2019-05-03</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/notes/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>
+              盒子模型CSS 基础框盒模型（CSS basic box model），是浏览器渲染中比较常用到的概念。主要有两种，一种是ie标准盒模型，一种是w3c标准盒模型。/* ie标准盒模型 */.container &#123;  box-sizing: border-box;&#125;/* w3c标准
+              ...
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/05/03/bfc,盒子模型小结/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.yeahs.cc/2019/04/30/四月小结/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yeahs"/>
+      <meta itemprop="description" content="这是一个很懒的人。。。"/>
+      <meta itemprop="image" content="/images/avatar.jpg"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yeahs's Blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/30/四月小结/" class="post-title-link" itemprop="url">四月小结</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-30 21:14:22" itemprop="dateCreated datePublished" datetime="2019-04-30T21:14:22+08:00">2019-04-30</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-03 11:35:34" itemprop="dateModified" datetime="2019-05-03T11:35:34+08:00">2019-05-03</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/总结/" itemprop="url" rel="index"><span itemprop="name">总结</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>
+              四月份又开始写博客了，怎么说呢，好像每次写博客都是为了跳槽而坐的准备，本身比较懒，每次写博客又不知道写啥，写了也基本是搬别人的东西（PS：虽然现在也是差不多。。。希望有一天能够写出自己的东西吧）。总结下四月份的东西吧：
+
+缓存方面的概念，以前对强缓存只是有个模糊概念的了解，只是简单的知道304缓存，
+              ...
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/04/30/四月小结/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.yeahs.cc/2019/04/28/HTTP状态码/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yeahs"/>
+      <meta itemprop="description" content="这是一个很懒的人。。。"/>
+      <meta itemprop="image" content="/images/avatar.jpg"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yeahs's Blog"/>
     </span>
 
     
@@ -361,12 +904,24 @@
                 
               
 
-              <time title="创建时间：2019-04-28 16:02:14 / 修改时间：16:36:24" itemprop="dateCreated datePublished" datetime="2019-04-28T16:02:14+08:00">2019-04-28</time>
+              <time title="创建时间：2019-04-28 16:02:14" itemprop="dateCreated datePublished" datetime="2019-04-28T16:02:14+08:00">2019-04-28</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-02 21:28:12" itemprop="dateModified" datetime="2019-05-02T21:28:12+08:00">2019-05-02</time>
               
             
           </span>
@@ -488,16 +1043,16 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.yeahs.cc/2019/04/26/chrome插件开发小结/">
+    <link itemprop="mainEntityOfPage" href="http://blog.yeahs.cc/2019/04/26/chrome插件开发小结/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yeahs">
-      <meta itemprop="description" content="这是一个很懒的人。。。">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yeahs"/>
+      <meta itemprop="description" content="这是一个很懒的人。。。"/>
+      <meta itemprop="image" content="/images/avatar.jpg"/>
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Yeahs's Blog">
+      <meta itemprop="name" content="Yeahs's Blog"/>
     </span>
 
     
@@ -533,12 +1088,24 @@
                 
               
 
-              <time title="创建时间：2019-04-26 11:37:41 / 修改时间：14:11:29" itemprop="dateCreated datePublished" datetime="2019-04-26T11:37:41+08:00">2019-04-26</time>
+              <time title="创建时间：2019-04-26 11:37:41" itemprop="dateCreated datePublished" datetime="2019-04-26T11:37:41+08:00">2019-04-26</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-03 00:38:59" itemprop="dateModified" datetime="2019-05-03T00:38:59+08:00">2019-05-03</time>
               
             
           </span>
@@ -667,16 +1234,16 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.yeahs.cc/2019/04/25/浏览器请求缓存整理/">
+    <link itemprop="mainEntityOfPage" href="http://blog.yeahs.cc/2019/04/25/浏览器请求缓存整理/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yeahs">
-      <meta itemprop="description" content="这是一个很懒的人。。。">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yeahs"/>
+      <meta itemprop="description" content="这是一个很懒的人。。。"/>
+      <meta itemprop="image" content="/images/avatar.jpg"/>
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Yeahs's Blog">
+      <meta itemprop="name" content="Yeahs's Blog"/>
     </span>
 
     
@@ -729,7 +1296,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-28 15:29:58" itemprop="dateModified" datetime="2019-04-28T15:29:58+08:00">2019-04-28</time>
+                <time title="修改时间：2019-05-03 11:43:13" itemprop="dateModified" datetime="2019-05-03T11:43:13+08:00">2019-05-03</time>
               
             
           </span>
@@ -851,16 +1418,16 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.yeahs.cc/2018/04/20/近期兼容行问题汇总/">
+    <link itemprop="mainEntityOfPage" href="http://blog.yeahs.cc/2018/04/20/近期兼容行问题汇总/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yeahs">
-      <meta itemprop="description" content="这是一个很懒的人。。。">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yeahs"/>
+      <meta itemprop="description" content="这是一个很懒的人。。。"/>
+      <meta itemprop="image" content="/images/avatar.jpg"/>
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Yeahs's Blog">
+      <meta itemprop="name" content="Yeahs's Blog"/>
     </span>
 
     
@@ -913,7 +1480,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-25 19:27:53" itemprop="dateModified" datetime="2019-04-25T19:27:53+08:00">2019-04-25</time>
+                <time title="修改时间：2019-05-02 21:28:12" itemprop="dateModified" datetime="2019-05-02T21:28:12+08:00">2019-05-02</time>
               
             
           </span>
@@ -1036,16 +1603,16 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.yeahs.cc/2017/11/02/JavaScript执行上下文知识整理/">
+    <link itemprop="mainEntityOfPage" href="http://blog.yeahs.cc/2017/11/02/JavaScript执行上下文知识整理/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yeahs">
-      <meta itemprop="description" content="这是一个很懒的人。。。">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yeahs"/>
+      <meta itemprop="description" content="这是一个很懒的人。。。"/>
+      <meta itemprop="image" content="/images/avatar.jpg"/>
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Yeahs's Blog">
+      <meta itemprop="name" content="Yeahs's Blog"/>
     </span>
 
     
@@ -1098,7 +1665,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-25 11:06:43" itemprop="dateModified" datetime="2019-04-25T11:06:43+08:00">2019-04-25</time>
+                <time title="修改时间：2019-05-02 21:28:12" itemprop="dateModified" datetime="2019-05-02T21:28:12+08:00">2019-05-02</time>
               
             
           </span>
@@ -1222,16 +1789,16 @@ When control i
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.yeahs.cc/2017/10/31/关于一道js题目的猜想/">
+    <link itemprop="mainEntityOfPage" href="http://blog.yeahs.cc/2017/10/31/关于一道js题目的猜想/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yeahs">
-      <meta itemprop="description" content="这是一个很懒的人。。。">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yeahs"/>
+      <meta itemprop="description" content="这是一个很懒的人。。。"/>
+      <meta itemprop="image" content="/images/avatar.jpg"/>
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Yeahs's Blog">
+      <meta itemprop="name" content="Yeahs's Blog"/>
     </span>
 
     
@@ -1284,7 +1851,7 @@ When control i
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-25 11:06:43" itemprop="dateModified" datetime="2019-04-25T11:06:43+08:00">2019-04-25</time>
+                <time title="修改时间：2019-05-02 21:28:12" itemprop="dateModified" datetime="2019-05-02T21:28:12+08:00">2019-05-02</time>
               
             
           </span>
@@ -1405,16 +1972,16 @@ When control i
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.yeahs.cc/2017/10/28/Vue2-x周期简述/">
+    <link itemprop="mainEntityOfPage" href="http://blog.yeahs.cc/2017/10/28/Vue2-x周期简述/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yeahs">
-      <meta itemprop="description" content="这是一个很懒的人。。。">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yeahs"/>
+      <meta itemprop="description" content="这是一个很懒的人。。。"/>
+      <meta itemprop="image" content="/images/avatar.jpg"/>
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Yeahs's Blog">
+      <meta itemprop="name" content="Yeahs's Blog"/>
     </span>
 
     
@@ -1467,7 +2034,7 @@ When control i
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-25 11:06:43" itemprop="dateModified" datetime="2019-04-25T11:06:43+08:00">2019-04-25</time>
+                <time title="修改时间：2019-05-02 21:28:12" itemprop="dateModified" datetime="2019-05-02T21:28:12+08:00">2019-05-02</time>
               
             
           </span>
@@ -1573,379 +2140,13 @@ When control i
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.yeahs.cc/2017/10/27/event-loop学习回顾/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yeahs">
-      <meta itemprop="description" content="这是一个很懒的人。。。">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Yeahs's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2017/10/27/event-loop学习回顾/" class="post-title-link" itemprop="url">event loop学习回顾</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2017-10-27 10:43:01" itemprop="dateCreated datePublished" datetime="2017-10-27T10:43:01+08:00">2017-10-27</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-04-25 11:06:43" itemprop="dateModified" datetime="2019-04-25T11:06:43+08:00">2019-04-25</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/notes/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>
-              以前事件队列在我的认知范围内是只有两种：同步事件队列与异步事件队列。在处理事件队列过程中，浏览器会定期检测同步队列并从同步事件队列获取事件，并将之执行，在这过程中，异步队列触发回调事件时，会将其从异步队列中出队，加入到同步事件队列中，一直重复上述过程。
-但在这里有个疑问，当多个异步事件队列同时到同步
-              ...
-            </p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2017/10/27/event-loop学习回顾/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.yeahs.cc/2017/10/26/双向数据绑定的实现/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yeahs">
-      <meta itemprop="description" content="这是一个很懒的人。。。">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Yeahs's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2017/10/26/双向数据绑定的实现/" class="post-title-link" itemprop="url">双向数据绑定的实现</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2017-10-26 16:38:18" itemprop="dateCreated datePublished" datetime="2017-10-26T16:38:18+08:00">2017-10-26</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-04-25 11:06:43" itemprop="dateModified" datetime="2019-04-25T11:06:43+08:00">2019-04-25</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/notes/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>
-              模仿vue的双向数据绑定
-前段时间听了TGideas的一场交流会之后萌生了自己实现数据双向绑定的想法，于是在参考了DMQ/mvvm: 剖析vue实现原理，自己动手实现mvvm的逻辑后用TypeScript实现了一套简单的双向数据绑定的库项目地址在这学习vue的双向数据绑定
-
-项目主要代码目录如下sr
-              ...
-            </p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2017/10/26/双向数据绑定的实现/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
 
 
           </div>
@@ -1974,7 +2175,9 @@ When control i
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Yeahs">
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Yeahs"/>
             
               <p class="site-author-name" itemprop="name">Yeahs</p>
               <div class="site-description motion-element" itemprop="description">这是一个很懒的人。。。</div>
@@ -1987,7 +2190,7 @@ When control i
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-count">12</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2008,7 +2211,9 @@ When control i
                     
                       
                     
-                    <span class="site-state-item-count">2</span>
+                      
+                    
+                    <span class="site-state-item-count">3</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -2035,7 +2240,9 @@ When control i
                     
                       
                     
-                    <span class="site-state-item-count">5</span>
+                      
+                    
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -2115,7 +2322,7 @@ When control i
 </div>
 
 
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.3.9</div>
 
 
 
