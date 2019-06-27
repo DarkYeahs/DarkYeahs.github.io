@@ -1,14 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[gitlab CI初步学习]]></title>
+    <url>%2F2019%2F06%2F26%2Fgitlab-CI%E5%88%9D%E6%AD%A5%E5%AD%A6%E4%B9%A0%2F</url>
+    <content type="text"><![CDATA[最近看了下关于devOps方面的内容，初步的了解了下自动化部署方面关于gitlab的CI处理流程，这里大概记录一下相关的东西。 gitlab CI是通过Gitlab Runner执行的一个脚本配置，当gitlab上的项目配置了runner并且在项目的根路径下添加了.gitlab-ci.yml的时候，每次的git提交或者推送都会触发gitlab ci（触发方式是可以在gitlab-ci.yml中配置的）。 Gitlab Runner将会根据.gitlab-ci.yml配置项执行相应的脚本，默认是有三个阶段:build, test, deploy。每个阶段下可以有多个任务，如果阶段下没有配置任务，则该阶段会被忽略。Gitlab CI是使用YAML的语法进行配置文件编写的，语法请查看官方文档，以下是关于配置项的具体说明。 配置项任务任务配置项是.gitlab-ci.yml中的最基本元素，是具有任意名称并且包含script配置项的顶级元素，没有数量限制，定义了当前任务的执行约束。 任务名字的保留关键字 image services stages types before_script after_script variables caches 每个任务下有以下配置项 字段名 描述 script Runner执行的shell脚本 image 任务执行的docker镜像 services 任务执行的docker services镜像 before_script 重写一组在作业前执行的命令 after_script 重写一组在作业后执行的命令 stages 定义被job调用的stages stage 定义当前job的stage only 定义任务创建的情况 except 定义任务不需要创建的情况 tags 定义执行的runner的tags列表 allow_failure 允许任务失败，任务失败不影响commit状态 when 定义什么时候执行job environment 定义deploy job的执行环境 cache 定义后续运行之间应缓存的文件列表 artifacts 用于指定成功后应附加到job的文件和目录的列表 dependencies 定义任务间的依赖关系，有依赖关系的任务之前可以进行artifacts传递 coverage 提取该任务下的代码覆盖率 retry 定义任务失败自动重试的时间以及重试次数 parallel 定义并行运行的作业实例数量 trigger 可用于强制使用API调用重建特定分支，tag或commits include 允许当前任务由额外的yaml文件配置 extends 配置当前任务继承的配置项入口 pages 上传作业结果以用于gitlab pages variables 在job级别定义job变量 stageimage &amp; services指定任务执行的Docker镜像以及一系列服务，并应用于整个job周期 before_script &amp; after_scriptbefore_script定义了在所有任务（script配置项）执行前需要执行的命令，包括deploy jobs，在artifacts修复后，这个配置项是一个数组或者多行字符串。after_script定义了在所有任务（script配置项）完成后需要执行的命令，包括失败项。这个配置项可以是数组或者多行字符串。 stages在全局定义执行的各个阶段1234stages: - build - test - deploy 每个stage允许有多个，按定义的顺序依次执行，只有当前的阶段全部执行成功后才会执行下一个阶段。 stagestage是按工作定义的，依赖于全局定义的阶段。 它允许将作业分组到不同的阶段，并且同一阶段的作业并行执行（受特定条件限制）。]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[docker初步学习]]></title>
     <url>%2F2019%2F06%2F24%2Fdocker%E5%88%9D%E6%AD%A5%E5%AD%A6%E4%B9%A0%2F</url>
-    <content type="text"></content>
+    <content type="text"><![CDATA[定义Docker属于linux容器的一种封装，提供简单易用的容器使用接口。是目前最为流行的Linux容器解决方案。 Docker 将应用程序与该程序的依赖，打包在一个文件里面。运行这个文件，就会生成一个虚拟容器。程序在这个虚拟容器里运行，就好像在真实的物理机上运行一样。 总体来说，Docker 的接口相当简单，用户可以方便地创建和使用容器，把自己的应用放入容器。容器还可以进行版本管理、复制、分享、修改，就像管理普通的代码一样。 用途Docker主要用途目前有三大类： 提供一次性的环境。比如，本地测试他人的软件、持续集成的时候提供单元测试和构建的环境。 提供弹性的云服务。因为 Docker 容器可以随开随关，很适合动态扩容和缩容。 组建微服务架构。通过多个容器，一台机器可以跑多个服务，因此在本机就可以模拟出微服务架构。 安装这里以centos 7环境安装为例，Docker分两个版本，一个是社区版本 Docker CE，一个是企业版本Docker EE（部分收费）。这里讲述的是社区版本的安装。 要求 需要开启centos-extras，centos 7是默认开启centos-extras的，但如果你之前手动关闭centos-extras，你需要开启centos-extras再进行安装。 推荐使用overlay2存储驱动程序 安装步骤 先卸载旧版本的Docker。旧版本的Docker被称为docker或者docker-engine，需要先移除他们以及他们的依赖 12345678$ sudo yum remove docker \ docker-client \ docker-client-latest \ docker-common \ docker-latest \ docker-latest-logrotate \ docker-logrotate \ docker-engine 安装Docker有三种方式，这里使用从仓库下载安装的方式。 123$ sudo yum install -y yum-utils \ device-mapper-persistent-data \ lvm2 yum-utils提供yum-config-manager的命令，接下来使用yum-config-manager添加Docker的安装库 123$ sudo yum-config-manager \ --add-repo \ https://download.docker.com/linux/centos/docker-ce.repo 然后在执行安装命令 1$ sudo yum install docker-ce docker-ce-cli containerd.io 启动Docker 1$ sudo systemctl start docker Docker权限 需要用户具有 sudo 权限，为了避免每次命令都输入sudo，可以把用户加入 Docker 用户组 12$ sudo groupadd docker$ sudo usermod -aG docker $USER 运行image文件image是二进制文件，Docker根据Dockerfile文件将应用程序及依赖生成一个二进制文件，即image文件。然后Docker根据image文件生成容器实例，同一个image文件可以生成多个容器实例。 容器文件Docker根据image文件生成的容器实例，本身也是一个文件。容器实例生成的时候，会同时存在两个文件：容器文件以及image文件。并且关闭容器不会删除容器文件，只是容器停止运行而已。 例子：hello world从官方库拉取一个hello world镜像到本地1docker image pull library/hello-world 拉取成功后可以运行以下命令常看image文件1$ docker image ls 运行该image文件1$ docker container run hello-world docker container run命令会根据hello-world生成正在运行的容器实例（容器文件），运行成功后会有以下输出12Hello from Docker!This message shows that your installation appears to be working correctly.]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[豆瓣租房爬虫小结]]></title>
     <url>%2F2019%2F06%2F20%2F%E8%B1%86%E7%93%A3%E7%A7%9F%E6%88%BF%E7%88%AC%E8%99%AB%E5%B0%8F%E7%BB%93%2F</url>
     <content type="text"><![CDATA[一开始是19年5月份的时候发现可以通过豆瓣的话题广场搜索获取租房的相关信息，然后通过在这里找到了鸿运花园的主卧。后面想着没事有时间可以写个爬虫玩玩方便以后找房子，再然后6月份又要找房子，就开始着手编写。项目地址：https://github.com/DarkYeahs/douban_spride.git 1. 请求 请求方面是使用的axios库作为请求，通过get请求获取整个请求链接的文本，需要设置请求头Host以及Referer防止豆瓣识别请求是一个爬虫请求。 12345678this.instance = axios.create(&#123; baseURL: 'https://www.douban.com', timeout: 5000, headers: &#123; Host: 'www.douban.com', Referer: 'www.douban.com', // 设置referer为www.douban.com防止被识别为爬虫 &#125;&#125;) 2. 解析 解析是使用了cheerio这个库，这个是一个服务端解析的html结构库，使用方式与jQuery有较多的相似之处，具体请参照GitHub相关文档 123const cheerio = require('cheerio');// 加载爬取的html字符串，获取爬取的html结构树const $ = cheerio.load(html) 3. 停止 连续同个ip爬取数据会被识别，所以需要间歇性的进行爬取，使用sleep进行暂停操作 123const sleep = require('sleep');// 当前睡眠2000mssleep.msleep(2000); sleep库有三个方法 sleep.sleep(time) 睡眠time s sleep.msleep(time) 睡眠time ms sleep.usleep(time) 睡眠time us time要求大于0并且是整数 4. 过滤 爬取到的列表中有些信息不一定是需要的，所以通过对爬取到的列表元素的标题信息进行过滤，通过必须关键字，不通过关键字以及可选关键字进行过滤排除，并通过爬取标题元素链接判断发帖人是否重复进行重复帖子的过滤 5. 定时 因为不想每次都要自己手动爬取，所以使用了node-schedule进行定时爬取 123456const schedule = require('node-schedule');// 每天晚上8点执行schedule.scheduleJob('* * 20 * * *', () =&gt; &#123; resultList = [] getList()&#125;) 6. 邮件 将爬取结果通过邮件方式通知自己，避免自己忘了这一回事，使用了nodemailer进行邮件通知 123456789101112131415161718192021222324252627const nodemailer = require('nodemailer'); const sendEmail = (html) =&gt; &#123; nodemailer.createTestAccount(() =&gt; &#123; let transporter = nodemailer.createTransport(&#123; service: 'qq', // 邮箱的smtp公司类型 port: 568, // 用于连接smtp的端口 secure: false, // 是否使用tls auth: &#123; user: '1550343909@qq.com', // 发件邮箱账号 pass: '' // 授权码，同时需要账号开启smtp服务 &#125; &#125;); let mailOptions = &#123; from: '"Yeahs" &lt;1550343909@qq.com&gt;', to: '18814099282@163.com', // 收件人 subject: '豆瓣租房', // 邮件主题 html: html // 信件内容 &#125;; transporter.sendMail(mailOptions, (error, info) =&gt; &#123; if (error) &#123; return console.log(error); &#125; console.log('发送成功----', info.accepted[0],info, new Date()); &#125;); &#125;); &#125;]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[微信1，2面小结]]></title>
+    <url>%2F2019%2F05%2F28%2F%E5%BE%AE%E4%BF%A11%EF%BC%8C2%E9%9D%A2%E5%B0%8F%E7%BB%93%2F</url>
+    <content type="text"></content>
   </entry>
   <entry>
     <title><![CDATA[redux初步认识以及与vuex的比较]]></title>
